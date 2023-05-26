@@ -8,22 +8,22 @@ import {
   Post, Put, Res,
 } from "@nestjs/common";
 
-import { BookService } from "./book.service";
+import { CartService } from "./cart.service";
 import { IUser } from "../user/interfaces/IUser";
-import { CreateBookDto } from "./dto/create-book.dto";
-import { IBook } from "./interfaces/IBook";
-import { EditBookDto } from "./dto/edit-book.dto";
+import { CreateCartDto } from "./dto/create-cart.dto";
+import { ICart } from "./interfaces/ICart";
+import { EditCartDto } from "./dto/edit-cart.dto";
 import { User } from "../../shared/decorator/user.decorator";
-import { Book } from "../../shared/decorator/book.decorator";
 import { ApiTags } from "@nestjs/swagger";
+import { Cart } from "../../shared/decorator/cart.decorator";
 
 
 //@UseGuards(JwtGuard)
-@ApiTags("books")
-@Controller("books")
-export class BookController {
+@ApiTags("carts")
+@Controller("carts")
+export class CartController {
   constructor(
-    private bookService: BookService
+    private cartService: CartService
   ) {
   }
 
@@ -32,7 +32,7 @@ export class BookController {
   @Post()
   public async create(
     @User() user: IUser,
-    @Body() body: CreateBookDto,
+    @Body() body: CreateCartDto,
     @Res() res
   ) {
     if (!body || (body && Object.keys(body).length === 0))
@@ -40,9 +40,9 @@ export class BookController {
         .status(HttpStatus.BAD_REQUEST)
         .send("Missing some information.");
 
-    const book = await this.bookService.create(body);
+    const cart = await this.cartService.create(body);
 
-    if (book) {
+    if (cart) {
       return res.status(HttpStatus.CREATED).send();
     } else {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
@@ -51,55 +51,55 @@ export class BookController {
 
   @Get()
   public async index( @Res() res) {
-    const books = await this.bookService.findAll();
-    return res.status(HttpStatus.OK).json(books);
+    const carts = await this.cartService.findAll();
+    return res.status(HttpStatus.OK).json(carts);
   }
 
   @Get(':id')
-  public async getBook( @Param("id") id: string,@Res() res) {
-    const books = await this.bookService.findById(id);
+  public async getCart( @Param("id") id: string,@Res() res) {
+    const carts = await this.cartService.findById(id);
 
-    return res.status(HttpStatus.OK).json(books);
+    return res.status(HttpStatus.OK).json(carts);
   }
 
-  @Put("books/:id")
+  @Put("carts/:id")
   public async update(
     @User() user: IUser,
-    @Book() book: IBook,
+    @Cart() cart: ICart,
     @Param("id") id: string,
-    @Body() body: EditBookDto,
+    @Body() body: EditCartDto,
     @Res() res
   ) {
-    if (user.id !== book.userId)
+    if (user.id !== cart.userId)
       return res
         .status(HttpStatus.NOT_FOUND)
         .send("Unable to find the entry.");
 
-    const updatedBook = await this.bookService.update(id, body);
+    const updatedCart = await this.cartService.update(id, body);
 
-    if (updatedBook) {
+    if (updatedCart) {
       return res.status(HttpStatus.NO_CONTENT).send();
     } else {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
     }
   }
 
-  @Delete("books/:id")
+  @Delete("carts/:id")
   public async delete(
     @User() user: IUser,
-    @Book() book: IBook,
+    @Cart() cart: ICart,
     @Param("id") id: string,
     @Res() res
   ) {
-    if (user.id !== book.userId)
+    if (user.id !== cart.userId)
       return res
         .status(HttpStatus.NOT_FOUND)
         .send("Unable to find the entry.");
 
-    const deletedBook = await this.bookService.delete(id);
+    const deletedCart = await this.cartService.delete(id);
     return res.status(HttpStatus.NO_CONTENT).send();
     //TODO need to fix this.
-    // if (deletedBook) {
+    // if (deletedCart) {
     // } else {
     //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
     // }

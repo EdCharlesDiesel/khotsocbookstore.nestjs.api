@@ -62,7 +62,7 @@ export class UserController {
     // @MessagePattern({ cmd: 'users.create' })
     public async rpcCreate(data: CreateUserRequest) {
         // if (!data || (data && Object.keys(data).length === 0))
-        //     throw new RpcValidationException();
+        //     throw new ValidationException();
         // await this.userService.create(data);
     }
 
