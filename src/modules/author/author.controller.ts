@@ -29,20 +29,15 @@ export class AuthorController {
 
   // ApiProperty('index')
   @Get()
-  public async get() {
-    // this.client.send({ cmd: 'authors.index' }, {}).subscribe({
-    //     next: authors => {
-    //         res.status(HttpStatus.OK).json(authors);
-    //     },
-    //     error: error => {
-    //         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
-    //     }
-    // });
+  public async getAuthors() {
+    return this.authorService.findAll();
   }
 
   @Post()
   public async create(@Body() body: CreateAuthorRequest) {
     const author = await this.authorService.create(body);
+    console.log('author',author);
+
     if (!author) {
       return "error in creating author";
     }

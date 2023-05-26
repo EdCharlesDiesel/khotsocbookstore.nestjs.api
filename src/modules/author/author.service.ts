@@ -18,7 +18,8 @@ export class AuthorService implements IAuthorService {
     return await this.authorRepository.findOneBy({ id });
   }
 
-  public async create(Author: IAuthor): Promise<Author> {
+  public async create(Author: IAuthor): Promise<Author | null> {
+    console.log('Creating author',Author);
     return this.authorRepository.create(Author);
   }
 

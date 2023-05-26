@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, Table } from "typeorm";
+import { string } from "@hapi/joi";
 
 
 @Entity('User')
@@ -7,60 +8,35 @@ export class User  {
     @PrimaryGeneratedColumn("uuid")
     public id: string;
 
-    @Column()
+    @Column(type => string)
     public firstName: string;
 
-    @Column()
+    @Column(type => string)
     public lastName: string;
 
-    @Column()
+    @Column(type => string)
     public idNumber: string;
 
-
-    @Column()
+    @Column(type => string)
     public email: string;
 
-    @Column()
+    @Column(type => string)
     public password: string;
 
-    @Column()
+    @Column(type => Date)
     public birthday: Date;
 
     //TODO we need to make this a role array one to many.
-    @Column()
+    @Column(type => string)
     public role: string;
 
     //TODO we need to make this a subscription.
-    @Column()
+    @Column(type => string)
     public subscription: string;
 
 
 
 
 
-    // @CreatedAt public createdAt: Date;
-    //
-    // @UpdatedAt public updatedAt: Date;
-    //
-    // @DeletedAt public deletedAt: Date;
 
-    // @HasMany(() => Entry)
-    // public entries: Entry[];
-
-    // @HasMany(() => Comment)
-    // public comments: Comment[];
-
-
-    public static validateData(user: User, options: any) {
-        if (!options.transaction) throw new Error('Missing transaction.');
-    }
-
-
-    // public static async hashPassword(user: User, options: any) {
-    //     if (!options.transaction) throw new Error('Missing transaction.');
-    //
-    //     user.password = crypto
-    //         .createHmac('sha256', user.password)
-    //         .digest('hex');
-    // }
 }

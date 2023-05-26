@@ -3,23 +3,19 @@ import {
     Controller,
     Delete,
     Get,
-    HttpStatus,
-    Inject,
     Param,
     Post,
     Put,
     Req,
     Res,
-    UseGuards,
-    UseInterceptors
 } from '@nestjs/common';
 import { UserService } from "./user.service";
 import { CreateUserRequest } from "./requests/create-user.request";
 import { UpdateUserRequest } from "./requests/update-user.request";
+import { ApiTags } from "@nestjs/swagger";
 
-
-@Controller()
-// @ApiUseTags('users')
+@Controller('user')
+@ApiTags('user')
 export class UserController {
     constructor(
         private readonly userService: UserService,
