@@ -1,5 +1,5 @@
 import { Author } from '../author.entity';
-import { IAuthor } from '../interfaces/index';
+import { IAuthor } from "./IAuthor";
 
 export interface IAuthorService {
     findAll(): Promise<Array<Author>>;

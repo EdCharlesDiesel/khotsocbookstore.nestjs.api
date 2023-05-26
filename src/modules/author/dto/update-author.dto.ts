@@ -7,7 +7,7 @@ import {
   ApiModelPropertyOptional
 } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
-export class UpdateAuthorRequest {
+export class UpdateAuthorDto {
   @IsNotEmpty()
   @IsString()
   @ApiModelPropertyOptional()
@@ -24,4 +24,10 @@ export class UpdateAuthorRequest {
   @IsString()
   @ApiModelPropertyOptional()
   public lastName: string;
+
+  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
+  @ApiModelPropertyOptional()
+  public bookAuthored: string;
 }

@@ -2,12 +2,16 @@ import { DocumentBuilder } from "@nestjs/swagger";
 
 export const swaggerOptions = new DocumentBuilder()
   .setTitle("KhotsoCBook Store API version 2.0.0")
-  .setDescription("KhotsoCBookStore a API build using nestjs ")
+  .setDescription("KhotsoCBookStore a API built using nestjs ")
   .setVersion("2.0.0")
   .setBasePath("/api")
-  .setExternalDoc("For more information", "http://swagger.io")
+  .addBasicAuth()
+  .setExternalDoc("For more information", "https://github.com/EdCharlesDiesel/khotsocbookstore.nestjs.api")
+  .addTag("authors", "application for buying and reading books")
   .addTag("books", "application for buying and reading books")
-  .addTag("nestjs", "framework")
+  .addTag("carts", "End-point to manipulate the cart")
+  .addTag("user", "End-point to manipulate the users")
+
   //.addBearerAuth('Authorization', 'header', 'apiKey')
   .build();
 

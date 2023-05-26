@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { Author } from "./author.entity";
-import { IAuthor, IAuthorService } from "./interfaces";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { IAuthorService } from "./interfaces/IAuthorService";
+import { IAuthor } from "./interfaces/IAuthor";
 
 //TODO use try catch
 @Injectable()

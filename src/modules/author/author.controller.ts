@@ -4,78 +4,105 @@ import {
   Delete,
   Get,
   HttpStatus,
-  Inject,
   Param,
-  Post,
-  Put,
-  Req,
-  Res,
-  UseGuards
+  Post, Put, Res,
 } from "@nestjs/common";
-import { AuthorService } from "./author.service";
-import { CreateAuthorRequest } from "./requests/create-author.request";
-import { UpdateAuthorRequest } from "./requests/update-author.request";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { CheckLoggedInUserGuard } from "../../shared/guards/check-loggedIn-user.guard";
 
-@ApiTags("author")
-@Controller("author")
+import { AuthorService } from "./author.service";
+
+import { IAuthor } from "./interfaces/IAuthor";
+import { User } from "../../shared/decorator/user.decorator";
+import { Author } from "../../shared/decorator/author.decorator";
+import { ApiTags } from "@nestjs/swagger";
+import { CreateAuthorDto } from "./dto/create-author.dto";
+import { UpdateAuthorDto } from "./dto/update-author.dto";
+import { IUser } from "../user/interfaces";
+
+
+//@UseGuards(JwtGuard)
+@ApiTags("authors")
+@Controller("authors")
 export class AuthorController {
   constructor(
-    private readonly authorService: AuthorService
+    private authorService: AuthorService
   ) {
   }
 
 
-  // ApiProperty('index')
-  @Get()
-  public async getAuthors() {
-    return this.authorService.findAll();
-  }
 
   @Post()
-  public async create(@Body() body: CreateAuthorRequest) {
+  public async create(
+    @User() user: IUser,
+    @Body() body: CreateAuthorDto,
+    @Res() res
+  ) {
+    if (!body || (body && Object.keys(body).length === 0))
+      return res
+        .status(HttpStatus.BAD_REQUEST)
+        .send("Missing some information.");
+
     const author = await this.authorService.create(body);
-    console.log('author',author);
 
-    if (!author) {
-      return "error in creating author";
+    if (author) {
+      return res.status(HttpStatus.CREATED).send();
+    } else {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
     }
-    return "author created successfully";
-
   }
 
-  // @Put('authors/:authorId')
-  // // @UseGuards(CheckLoggedInUserGuard)
-  // // @ApiBearerAuth()
-  // public async update(authorId: string, @Body() body: UpdateAuthorRequest  ) {
-  //     // this.client
-  //     //     .send({ cmd: 'authors.update' }, { authorId, body, author: req.author })
-  //     //     .subscribe({
-  //     //         next: () => {
-  //     //             res.status(HttpStatus.OK).send();
-  //     //         },
-  //     //         error: error => {
-  //     //             res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-  //     //         }
-  //     //     });
-  // }
-  //
-  // @Delete('authors/:authorId')
-  // // @UseGuards(CheckLoggedInUserGuard)
-  // // @ApiBearerAuth()
-  // public async delete(@Param('authorId') authorId: string ) {
-  //     // this.client
-  //     //     .send({ cmd: 'authors.delete' }, { authorId, author: req.author })
-  //     //     .subscribe({
-  //     //         next: () => {
-  //     //             res.status(HttpStatus.OK).send();
-  //     //         },
-  //     //         error: error => {
-  //     //             res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-  //     //         }
-  //     //     });
-  // }
+  @Get()
+  public async index( @Res() res) {
+    const authors = await this.authorService.findAll();
+    return res.status(HttpStatus.OK).json(authors);
+  }
+
+  @Get(':id')
+  public async getAuthor( @Param("id") id: string,@Res() res) {
+    const authors = await this.authorService.findById(id);
+
+    return res.status(HttpStatus.OK).json(authors);
+  }
+
+  @Put("authors/:id")
+  public async update(
+    @User() user: IUser,
+    @Author() author: IAuthor,
+    @Param("id") id: string,
+    @Body() body: UpdateAuthorDto,
+    @Res() res
+  ) {
+    if (user.id !== author.bookAuthored)
+      return res
+        .status(HttpStatus.NOT_FOUND)
+        .send("Unable to find the entry.");
+
+    const updatedAuthor = await this.authorService.update(id, body);
+
+    if (updatedAuthor) {
+      return res.status(HttpStatus.NO_CONTENT).send();
+    } else {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+    }
+  }
+
+  @Delete("authors/:id")
+  public async delete(
+    @User() user: IUser,
+    @Author() author: IAuthor,
+    @Param("id") id: string,
+    @Res() res
+  ) {
+    if (user.id !== author.bookAuthored)
+      return res
+        .status(HttpStatus.NOT_FOUND)
+        .send("Unable to find the entry.");
+
+    await this.authorService.delete(id);
+    return res.status(HttpStatus.NO_CONTENT).send();
+    //TODO need to fix this.
+    // if (deletedAuthor) {
+    // } else {
+    //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+    // }
+  }
 }
-
-
