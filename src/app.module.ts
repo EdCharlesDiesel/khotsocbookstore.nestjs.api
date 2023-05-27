@@ -7,6 +7,7 @@ import { UserModule } from "./modules/user/user.module";
 import { AuthorModule } from "./modules/author/author.module";
 import { BookModule } from "./modules/book/book.module";
 import { CartModule } from "./modules/cart/cart.module";
+import { AuthenticationModule } from "./modules/authentication/authentication.module";
 
 @Module({
   imports: [
@@ -24,10 +25,11 @@ import { CartModule } from "./modules/cart/cart.module";
       // },
       autoLoadEntities: true
     }),
-    UserModule,
+    AuthenticationModule,
     AuthorModule,
     BookModule,
-    CartModule
+    CartModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService]

@@ -14,8 +14,8 @@ import { UserService } from "./user.service";
 
 
 //@UseGuards(JwtGuard)
-@ApiTags("users")
-@Controller("users")
+@ApiTags("User")
+@Controller("User")
 export class UserController {
     constructor(private userService: UserService) {
     }

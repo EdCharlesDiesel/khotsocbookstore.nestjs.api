@@ -19,9 +19,11 @@ export class AuthorService implements IAuthorService {
     return await this.authorRepository.findOneBy({ id });
   }
 
-  public async create(Author: IAuthor): Promise<Author | null> {
-    console.log('Creating author',Author);
-    return this.authorRepository.create(Author);
+  public async create(author: IAuthor): Promise<Author | null> {
+    const authorToAdd = await this.authorRepository.create(author);
+    await this.authorRepository.save(authorToAdd);
+
+    return authorToAdd;
   }
 
   public async update(id: string, newValue: IAuthor): Promise<Author | null> {
@@ -30,11 +32,16 @@ export class AuthorService implements IAuthorService {
       throw new Error("The Author was not found.");
     } else {
       await this.authorRepository.update(id, newValue);
-      return;
+      await this.authorRepository.save(newValue);
+      return null;
     }
   }
 
   public async delete(id: string): Promise<any> {
     await this.authorRepository.delete(id);
   };
+
+  public async saveAsync(updatedAuthor: Author) {
+
+  }
 }
