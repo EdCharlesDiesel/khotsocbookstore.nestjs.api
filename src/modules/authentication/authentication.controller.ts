@@ -17,7 +17,7 @@ export class AuthenticationController {
   constructor(
     private readonly authenticationService: AuthenticationService,
     private readonly userService: UserService
-  ) {}
+  ) { }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
@@ -28,14 +28,9 @@ export class AuthenticationController {
         .send('Missing email or password.');
     }
 
-    const user = await this.userService.findOne({
-      where: {
-        email: body.email,
-        password: crypto
-          .createHmac('sha256', body.password)
-          .digest('hex')
-      }
-    });
+    const user = await this.userService.login(body.email, body.password,);
+
+
     if (!user) {
       return res
         .status(HttpStatus.NOT_FOUND)

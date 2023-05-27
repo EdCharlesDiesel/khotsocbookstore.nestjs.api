@@ -8,7 +8,7 @@ import { Repository } from "typeorm";
 import { Book } from "./book.entity";
 import { IBookService } from "./interfaces/IBookService";
 import { CreateBookDto } from "./dto/create-book.dto";
-import { EditBookDto } from "./dto/edit-book.dto";
+import { UpdateBookDto } from "./dto/update-book.dto";
 
 @Injectable()
 export class BookService implements IBookService {
@@ -21,7 +21,7 @@ export class BookService implements IBookService {
 
   public async findById(id: string): Promise<Book> {
 
-    const book = await this.bookRepository.findOneBy({id});
+    const book = await this.bookRepository.findOneBy({ id });
     if (book) {
       return book;
     }
@@ -36,7 +36,7 @@ export class BookService implements IBookService {
     return bookToAdd;
   }
 
-  public async update(id: string, newBook: EditBookDto): Promise<Book> {
+  public async update(id: string, newBook: UpdateBookDto): Promise<Book> {
     const book = await this.bookRepository.findBy({ id });
     if (!book) {
       throw new Error("The book was not found.");
@@ -51,20 +51,4 @@ export class BookService implements IBookService {
   }
 
 }
-
-//TODO Will implement later
-// getBooks(userId: string) {
-//   return this.bookRepository.find({
-//     where: {
-//       bookId: userId
-//     }
-//   });
-// }
-//
-// getBookmarkById(userId: string, bookId: string) {
-//
-// }
-
-
-
 

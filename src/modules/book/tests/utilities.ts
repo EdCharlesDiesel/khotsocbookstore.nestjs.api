@@ -4,9 +4,11 @@ import moment from 'moment';
 export function generateFakeBook(count = 1) {
   return _.range(0, count).map((i) => ({
     email: `test${i}@test.fr`,
-    firstName: 'picsou' + i,
-    lastName: 'gold' + i,
-    password: 'dqzwfesgxrdhtfyjdg',
-    birthday: moment().format('YYYY-MM-DD'),
+    title: 'test title' + i,
+    publishedDate: moment().format('YYYY-MM-DD'),
+    retailPrice: 'dqzwfesgxrdhtfyjdg',
+    coverFileName: 'pic.jpg',
+    cost: 300,
+    userId: 'Khotso Mokhethi'
   }));
 }

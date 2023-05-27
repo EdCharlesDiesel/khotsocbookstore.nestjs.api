@@ -6,7 +6,7 @@ import {
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class EditBookDto {
+export class UpdateBookDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -25,7 +25,7 @@ export class EditBookDto {
   @IsNumber()
   @IsOptional()
   @ApiProperty()
-  retailPrice: number;
+  retailPrice?: number;
 
   @IsString()
   @IsOptional()

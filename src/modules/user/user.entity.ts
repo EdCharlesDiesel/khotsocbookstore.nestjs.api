@@ -1,5 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, Table } from "typeorm";
-import { string } from "@hapi/joi";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('User')
@@ -8,35 +7,30 @@ export class User  {
     @PrimaryGeneratedColumn("uuid")
     public id: string;
 
-    @Column(type => string)
+    @Column("varchar", { length: 200 },)
     public firstName: string;
 
-    @Column(type => string)
+    @Column("varchar", { length: 200 },)
     public lastName: string;
 
-    @Column(type => string)
+    @Column("varchar", { length: 13 },)
     public idNumber: string;
 
-    @Column(type => string)
+    //TODO include email validation.
+    @Column("varchar", { length: 200 },)
     public email: string;
 
-    @Column(type => string)
+    @Column("varchar", { length: 200 },)
     public password: string;
 
-    @Column(type => Date)
+    @Column({ type: 'timestamptz'})
     public birthday: Date;
 
     //TODO we need to make this a role array one to many.
-    @Column(type => string)
+    @Column("varchar", { length: 200 },)
     public role: string;
 
     //TODO we need to make this a subscription.
-    @Column(type => string)
+    @Column("varchar", { length: 200 },)
     public subscription: string;
-
-
-
-
-
-
 }

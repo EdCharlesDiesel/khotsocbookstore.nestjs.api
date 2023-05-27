@@ -16,7 +16,7 @@ import { Author } from "../../shared/decorator/author.decorator";
 import { ApiTags } from "@nestjs/swagger";
 import { CreateAuthorDto } from "./dto/create-author.dto";
 import { UpdateAuthorDto } from "./dto/update-author.dto";
-import { IUser } from "../user/interfaces";
+import { IUser } from "../user/interfaces/IUser";
 
 
 //@UseGuards(JwtGuard)

@@ -1,65 +1,68 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { User } from './user.entity';
-import { IUser, IUserService } from "./interfaces";
+import { Injectable, HttpException, HttpStatus } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { User } from "./user.entity";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { IUserService } from "./interfaces/IUserService";
 
 @Injectable()
 export class UserService implements IUserService {
-  constructor(
-
-    @Inject('UserRepository') private readonly UserRepository: typeof User,
-
-  ) {}
-
-  public async findAll(options?: object): Promise<Array<User | null>> {
-
-    return  null;
-    //return await this.UserRepository.findAll<User>(options);
+ 
+  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
   }
 
-  public async findOne(options?: object): Promise<User | null> {
-    //return await this.UserRepository.findOne<User>(options);
-    return  null
+  findAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 
-  public async findById(id: number): Promise<User | null> {
-    //return await this.UserRepository.findById<User>(id);
-    return null;
+  public async findOne(user: any): Promise<User> {
+    
+    const userfromDatabase = await this.userRepository.findOneBy({ email: user.email, password: user.password });
+
+    if (userfromDatabase) {
+      return userfromDatabase;
+    }
+
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+  }
+  
+
+  public async findById(id: string): Promise<User> {
+
+    const user = await this.userRepository.findOneBy({ id });
+    if (user) {
+      return user;
+    }
+
+    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
   }
 
-  public async create(user: IUser): Promise<User> {
-    // return await this.sequelizeInstance.transaction(async (transaction) => {
-    //   return await this.UserRepository.create<User>(user, {
-    //     returning: true,
-    //     transaction,
-    //   });
-    // });
-    return new User()
+  public async create(user: CreateUserDto): Promise<User> {
+    const userToAdd = await this.userRepository.create(user);
+    await this.userRepository.save(userToAdd);
+
+    return userToAdd;
   }
 
-  public async update(id: number, newValue: IUser): Promise<User | null> {
-    // return await this.sequelizeInstance.transaction(async (transaction) => {
-    //   let user = await this.UserRepository.findById<User>(id, {
-    //     transaction,
-    //   });
-    //   if (!user) throw new Error('The user was not found.');
-    //
-    //   user = this.databaseUtilitiesService.assign(user, newValue);
-    //   return await user.save({
-    //     returning: true,
-    //     transaction,
-    //   });
-    // });
-    return null;
+  public async update(id: string, newUser: UpdateUserDto): Promise<User> {
+    const user = await this.userRepository.findBy({ id });
+    if (!user) {
+      throw new Error("The user was not found.");
+    } else {
+      await this.userRepository.update(id, newUser);
+      return;
+    }
   }
 
-  public async delete(id: number): Promise<void> {
-    // return await this.sequelizeInstance.transaction(async (transaction) => {
-    //   return await this.UserRepository.destroy({
-    //     where: { id },
-    //     transaction,
-    //   });
-    // });
-
-    return null
+  public async delete(id: string): Promise<void> {
+    await this.userRepository.delete(id);
   }
+
+  //FIXME fix the loging service.
+  public async login( email: string, password: string ) : Promise<User> {
+    return new User;
+  }
+
 }
+

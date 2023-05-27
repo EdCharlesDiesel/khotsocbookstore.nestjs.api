@@ -1,11 +1,13 @@
 
 
 export interface IUser {
-  id?: string;
+  id: string;
   firstName: string;
   lastName: string;
+  idNumber: string;
   email: string;
   password: string;
-  birthday?: Date;
-  //  entries?: Array<Entry>;
+  birthday: Date;
+  role: string;
+  subscription: string;
 }

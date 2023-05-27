@@ -21,9 +21,7 @@ export class AuthenticationService {
     email: string;
     password: string;
   }): Promise<boolean> {
-    const user = await this.userService.findOne({
-      where: { email: payload.email }
-    });
+    const user = await this.userService.findOne(payload.email);
     return !!user;
   }
 }

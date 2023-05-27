@@ -1,11 +1,14 @@
-import { User } from '../user.entity';
-import { IUser } from '../interfaces/index';
+import { CreateUserDto } from "../dto/create-user.dto";
+import { UpdateUserDto } from "../dto/update-user.dto";
+import { User } from "../user.entity";
+import { IUser } from "./IUser";
 
 export interface IUserService {
     findAll(): Promise<Array<User>>;
-    findById(id: number): Promise<User | null>;
-    findOne(options: object): Promise<User | null>;
-    create(user: IUser): Promise<User>;
-    update(id: number, newValue: IUser): Promise<User | null>;
-    delete(id: number): Promise<void>;
+    findOne(user: IUser): Promise<User | null>;
+    findById(id: string): Promise<User | null>;    
+    create(user: CreateUserDto): Promise<User>;
+    update(id: string, newUser: UpdateUserDto): Promise<User | null>;
+    delete(id: string): Promise<void>;
+    login(email: string, password: string): Promise<User | null>;    
 }

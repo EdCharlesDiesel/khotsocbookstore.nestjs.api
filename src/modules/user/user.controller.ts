@@ -3,146 +3,83 @@ import {
     Controller,
     Delete,
     Get,
+    HttpStatus,
     Param,
-    Post,
-    Put,
-    Req,
-    Res,
-} from '@nestjs/common';
-import { UserService } from "./user.service";
-import { CreateUserRequest } from "./requests/create-user.request";
-import { UpdateUserRequest } from "./requests/update-user.request";
+    Post, Put, Res
+} from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { UserService } from "./user.service";
 
-@Controller('user')
-@ApiTags('user')
+
+//@UseGuards(JwtGuard)
+@ApiTags("users")
+@Controller("users")
 export class UserController {
-    constructor(
-        private readonly userService: UserService,
-
-    ) {}
-
-    @Get('users')
-    //@UseGuards(CheckLoggedInUserGuard)
-    //@ApiBearerAuth()
-    public async index(@Res() res) {
-        // this.client.send({ cmd: 'users.index' }, {}).subscribe({
-        //     next: users => {
-        //         res.status(HttpStatus.OK).json(users);
-        //     },
-        //     error: error => {
-        //         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
-        //     }
-        // });
+    constructor(private userService: UserService) {
     }
 
-    // @MessagePattern({ cmd: 'users.index' })
-    // @UseGuards(CheckLoggedInUserGuard)
-    public async rpcIndex() {
+    @Post()
+    public async create(@Body() body: CreateUserDto, @Res() res) {
+        if (!body || (body && Object.keys(body).length === 0))
+            return res
+                .status(HttpStatus.BAD_REQUEST)
+                .send("Missing some information.");
+
+        const user = await this.userService.create(body);
+
+        if (user) {
+            return res.status(HttpStatus.CREATED).send();
+        } else {
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+        }
+    }
+
+    @Get()
+    public async getUsers(@Res() res) {
         const users = await this.userService.findAll();
-        return users;
+        return res.status(HttpStatus.OK).json(users);
     }
 
-    @Post('users')
-    public async create(@Body() body: CreateUserRequest, @Res() res) {
-        // this.client.send({ cmd: 'users.create' }, body).subscribe({
-        //     next: () => {
-        //         res.status(HttpStatus.CREATED).send();
-        //     },
-        //     error: error => {
-        //         if (error.error_code === 'VALIDATION_FAILED') {
-        //             res.status(HttpStatus.BAD_REQUEST).send(error);
-        //         } else {
-        //             res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-        //         }
-        //     }
-        // });
+    @Get(":id")
+    public async getUser(@Param("id") id: string, @Res() res) {
+        const users = await this.userService.findById(id);
+
+        return res.status(HttpStatus.OK).json(users);
     }
 
-    // @MessagePattern({ cmd: 'users.create' })
-    public async rpcCreate(data: CreateUserRequest) {
-        // if (!data || (data && Object.keys(data).length === 0))
-        //     throw new ValidationException();
-        // await this.userService.create(data);
+    @Put(":id")
+    public async update(@Param("id") id: string, @Body() body: UpdateUserDto, @Res() res) {
+        // console.log('id',id);
+        // if (user.id !== user.userId)
+        //   return res
+        //     .status(HttpStatus.NOT_FOUND)
+        //     .send("Unable to find the entry.");
+        await this.userService.update(id, body);
+
+        return res.status(HttpStatus.NO_CONTENT).send();
+
+        // if (updatedUser) {
+        //   return res.status(HttpStatus.NO_CONTENT).send();
+        // } else {
+        //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+        // }
     }
 
-    @Get('users/:userId')
-    // @UseGuards(CheckLoggedInUserGuard)
-    // @ApiBearerAuth()
-    public async show(@Param('userId') userId: number, @Req() req, @Res() res) {
-        // this.client
-        //     .send({ cmd: 'users.show' }, { userId, user: req.user })
-        //     .subscribe({
-        //         next: user => {
-        //             res.status(HttpStatus.OK).json(user);
-        //         },
-        //         error: error => {
-        //             res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
-        //         }
-        //     });
-    }
+    @Delete(":id")
+    public async delete(@Param("id") id: string, @Res() res) {
+        //   if (user.id !== user.userId)
+        //     return res
+        //       .status(HttpStatus.NOT_FOUND)
+        //       .send("Unable to find the entry.");
 
-    // @MessagePattern({ cmd: 'users.show' })
-    // @UseGuards(RpcCheckLoggedInUserGuard)
-    // @UseInterceptors(CleanUserInterceptor)
-    public async rpcShow(data: any) {
-        return await this.userService.findById(data.userId);
-    }
-
-    @Put('users/:userId')
-    // @UseGuards(CheckLoggedInUserGuard)
-    // @ApiBearerAuth()
-    public async update(
-        @Param('userId') userId: number,
-        @Body() body: UpdateUserRequest,
-        @Req() req,
-        @Res() res
-    ) {
-        // this.client
-        //     .send({ cmd: 'users.update' }, { userId, body, user: req.user })
-        //     .subscribe({
-        //         next: () => {
-        //             res.status(HttpStatus.OK).send();
-        //         },
-        //         error: error => {
-        //             res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-        //         }
-        //     });
-    }
-
-    // @MessagePattern({ cmd: 'users.update' })
-    // @UseGuards(RpcCheckLoggedInUserGuard)
-    public async rpcUpdate(data: any) {
-        await this.userService.update(data.userId, data.body);
-    }
-
-    @Delete('users/:userId')
-    // @UseGuards(CheckLoggedInUserGuard)
-    // @ApiBearerAuth()
-    public async delete(
-        @Param('userId') userId: number,
-        @Req() req,
-        @Res() res
-    ) {
-        // this.client
-        //     .send({ cmd: 'users.delete' }, { userId, user: req.user })
-        //     .subscribe({
-        //         next: () => {
-        //             res.status(HttpStatus.OK).send();
-        //         },
-        //         error: error => {
-        //             res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
-        //         }
-        //     });
-    }
-
-    // @MessagePattern({ cmd: 'users.delete' })
-    // @UseGuards(RpcCheckLoggedInUserGuard)
-    public async rpcDelete(data: any) {
-        await this.userService.delete(data.userId);
+        await this.userService.delete(id);
+        return res.status(HttpStatus.NO_CONTENT).send();
+        //TODO need to fix this.
+        // if (deletedUser) {
+        // } else {
+        //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+        // }
     }
 }
-function ApiUseTags(arg0: string) {
-    throw new Error('Function not implemented.');
-}
-

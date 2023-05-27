@@ -12,7 +12,7 @@ export class CreateBookDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  title: string;
+  title?: string;
 
   @IsDate()
   @IsOptional()
@@ -22,7 +22,7 @@ export class CreateBookDto {
   @IsNumber()
   @IsOptional()
   @ApiProperty()
-  retailPrice: number;
+  retailPrice?: number;
 
   @IsString()
   @IsOptional()
