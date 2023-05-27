@@ -9,8 +9,6 @@ import {
 } from "@nestjs/common";
 
 import { AuthorService } from "./author.service";
-
-import { IAuthor } from "./interfaces/IAuthor";
 import { User } from "../../shared/decorator/user.decorator";
 import { Author } from "../../shared/decorator/author.decorator";
 import { ApiTags } from "@nestjs/swagger";
@@ -65,7 +63,7 @@ export class AuthorController {
   public async update(
     // @User() user: IUser,
     // @Author() author: IAuthor,
-    id: string,
+    @Param("id") id: string,
     @Body() body: UpdateAuthorDto,
     @Res() res
   ) {

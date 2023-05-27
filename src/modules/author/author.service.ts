@@ -27,7 +27,8 @@ export class AuthorService implements IAuthorService {
   }
 
   public async update(id: string, newValue: IAuthor): Promise<Author | null> {
-    const author = await this.authorRepository.findBy({ id });
+    const author = await this.authorRepository.findOneBy({ id });
+
     if (!author) {
       throw new Error("The Author was not found.");
     } else {
@@ -42,6 +43,6 @@ export class AuthorService implements IAuthorService {
   };
 
   public async saveAsync(updatedAuthor: Author) {
-
+    await this.authorRepository.save(updatedAuthor);
   }
 }

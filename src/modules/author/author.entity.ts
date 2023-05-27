@@ -8,6 +8,8 @@ export class Author {
     public firstName: string;
     @Column("varchar", { length: 200 },)
     public lastName: string;
+    @Column("varchar", { length: 200 },)
+    bookAuthored: string;
 
 
 }
