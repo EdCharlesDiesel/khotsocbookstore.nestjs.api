@@ -27,21 +27,22 @@ export class AuthorService implements IAuthorService {
   }
 
   public async update(id: string, newValue: IAuthor): Promise<Author | null> {
-    const author = await this.authorRepository.findBy({ id });
+    const author = await this.authorRepository.findOneBy({ id });
+
     if (!author) {
       throw new Error("The Author was not found.");
     } else {
       await this.authorRepository.update(id, newValue);
       await this.authorRepository.save(newValue);
-      return null;
+      return author;
     }
   }
 
-  public async delete(id: string): Promise<any> {
+  public async delete(id: string): Promise<void> {
     await this.authorRepository.delete(id);
   };
 
   public async saveAsync(updatedAuthor: Author) {
-
+    await this.authorRepository.save(updatedAuthor);
   }
 }

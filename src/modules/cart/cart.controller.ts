@@ -47,7 +47,7 @@ export class CartController {
   }
 
   @Get()
-  public async index( @Res() res) {
+  public async getAllCarts( @Res() res) {
     const carts = await this.cartService.findAll();
     return res.status(HttpStatus.OK).json(carts);
   }
@@ -93,8 +93,8 @@ export class CartController {
         .status(HttpStatus.NOT_FOUND)
         .send("Unable to find the entry.");
 
-    const deletedCart = await this.cartService.delete(id);
-    return res.status(HttpStatus.NO_CONTENT).send();
+ await this.cartService.delete(id);
+    //return res.status(HttpStatus.NO_CONTENT).send();
     //TODO need to fix this.
     // if (deletedCart) {
     // } else {
