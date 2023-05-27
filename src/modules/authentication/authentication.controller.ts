@@ -9,9 +9,8 @@ import {
   Body
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
+import { AuthenticationDto } from './dto/authentication.dto';
 
-
-import { AuthenticationDto } from "./dto";
 
 @Controller()
 export class AuthenticationController {
