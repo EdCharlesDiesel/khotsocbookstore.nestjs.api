@@ -1,10 +1,13 @@
 import { Column, Entity, PrimaryGeneratedColumn, } from "typeorm";
 
-@Entity('author')
+@Entity('Author')
 export class Author {
-    @PrimaryGeneratedColumn("uuid")    public id: string;
-    @Column()    public firstName: string;
-    @Column() public lastName: string;
+    @PrimaryGeneratedColumn("uuid")
+    public id: string;
+    @Column("varchar", { length: 200 },)
+    public firstName: string;
+    @Column("varchar", { length: 200 },)
+    public lastName: string;
 
 
 }

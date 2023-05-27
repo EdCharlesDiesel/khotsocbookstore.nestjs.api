@@ -19,16 +19,13 @@ import { Cart } from "../../shared/decorator/cart.decorator";
 
 
 //@UseGuards(JwtGuard)
-@ApiTags("carts")
-@Controller("carts")
+@ApiTags("Cart")
+@Controller("Cart")
 export class CartController {
   constructor(
     private cartService: CartService
   ) {
   }
-
-
-
   @Post()
   public async create(
     @User() user: IUser,

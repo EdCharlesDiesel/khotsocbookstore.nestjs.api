@@ -19,8 +19,8 @@ import { IUser } from "../user/interfaces/IUser";
 
 
 //@UseGuards(JwtGuard)
-@ApiTags("books")
-@Controller("books")
+@ApiTags("Book")
+@Controller("Book")
 export class BookController {
   constructor(private bookService: BookService) {
   }

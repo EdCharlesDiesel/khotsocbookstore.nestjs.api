@@ -20,15 +20,13 @@ import { IUser } from "../user/interfaces/IUser";
 
 
 //@UseGuards(JwtGuard)
-@ApiTags("authors")
-@Controller("authors")
+@ApiTags("Author")
+@Controller("Author")
 export class AuthorController {
   constructor(
     private authorService: AuthorService
   ) {
   }
-
-
 
   @Post()
   public async create(
@@ -63,39 +61,39 @@ export class AuthorController {
     return res.status(HttpStatus.OK).json(authors);
   }
 
-  @Put("authors/:id")
+  @Put(":id")
   public async update(
-    @User() user: IUser,
-    @Author() author: IAuthor,
-    @Param("id") id: string,
+    // @User() user: IUser,
+    // @Author() author: IAuthor,
+    id: string,
     @Body() body: UpdateAuthorDto,
     @Res() res
   ) {
-    if (user.id !== author.bookAuthored)
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .send("Unable to find the entry.");
+    // if (user.id !== author.bookAuthored)
+    //   return res
+    //     .status(HttpStatus.NOT_FOUND)
+    //     .send("Unable to find the entry.");
 
     const updatedAuthor = await this.authorService.update(id, body);
-
-    if (updatedAuthor) {
-      return res.status(HttpStatus.NO_CONTENT).send();
-    } else {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
-    }
+    await this.authorService.saveAsync(updatedAuthor);
+    // if (updatedAuthor) {
+    //   return res.status(HttpStatus.NO_CONTENT).send();
+    // } else {
+    //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+    // }
   }
 
-  @Delete("authors/:id")
+  @Delete(":id")
   public async delete(
-    @User() user: IUser,
-    @Author() author: IAuthor,
-    @Param("id") id: string,
-    @Res() res
+    // @User() user: IUser,
+    // @Author() author: IAuthor,
+     @Param("id") id: string,
+     @Res() res
   ) {
-    if (user.id !== author.bookAuthored)
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .send("Unable to find the entry.");
+    // if (user.id !== author.bookAuthored)
+    //   return res
+    //     .status(HttpStatus.NOT_FOUND)
+    //     .send("Unable to find the entry.");
 
     await this.authorService.delete(id);
     return res.status(HttpStatus.NO_CONTENT).send();
