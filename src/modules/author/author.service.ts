@@ -34,11 +34,11 @@ export class AuthorService implements IAuthorService {
     } else {
       await this.authorRepository.update(id, newValue);
       await this.authorRepository.save(newValue);
-      return null;
+      return author;
     }
   }
 
-  public async delete(id: string): Promise<any> {
+  public async delete(id: string): Promise<void> {
     await this.authorRepository.delete(id);
   };
 
