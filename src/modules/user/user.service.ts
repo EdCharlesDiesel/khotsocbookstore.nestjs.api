@@ -5,9 +5,10 @@ import { User } from "./user.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { IUserService } from "./interfaces/IUserService";
-import { toUserDto } from "../../common/helper/mapper";
+import { toUserDto } from "../../shared/helper/mapper";
 import { LoginUserDto } from "../authentication/dto/LoginUserDto";
 import { IUser } from "./interfaces/IUser";
+import { comparePasswords } from '../../shared/helper/utils';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -49,18 +50,20 @@ export class UserService implements IUserService {
 
   //TODO need to fix the type.
   public async create(userDto: CreateUserDto): Promise<any> {
-    const { username, password, email } = userDto;
+    //const { username, password, email } = userDto;
 
     // check if the user exists in the db
     const userInDb = await this.userRepository.findOne({
-      where: { username }
+      where: { 
+        username: userDto.username
+       }
     });
 
     if (userInDb) {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     }
 
-    const user: any = await this.userRepository.create({ username, password, email});
+    const user: any = await this.userRepository.create(userDto);
     await this.userRepository.save(user);
     return user;
   }
@@ -92,20 +95,13 @@ export class UserService implements IUserService {
     }
 
     // compare passwords
-    const areEqual = await this.comparePasswords(user.password, password);
+    const areEqual = await comparePasswords(user.password, password);
 
     if (!areEqual) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
 
     return toUserDto(user);
-  }
-
-  //FIXME this method is not working as expected
-
-  private async comparePasswords(password, password2: string) : Promise<boolean>{
-
-    return true;
   }
 
   public async findByPayload({ username }: any): Promise<IUser> {
