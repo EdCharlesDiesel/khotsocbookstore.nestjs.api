@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { AuthenticationDto } from './dto/authentication.dto';
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { RegistrationStatus } from './interfaces/regisration-status.interface';
 import { LoginUserDto } from './dto/LoginUserDto';
@@ -52,7 +52,8 @@ export class AuthenticationController {
   }
 
   @Get('whoami')
-  @UseGuards(AuthGuard())
+  //@UseGuards(AuthGuard())
+  @ApiBearerAuth('defaultBearerAuth')
   public async testAuth(@Req() req: any): Promise<JwtPayload> {
     return req.user;
   }

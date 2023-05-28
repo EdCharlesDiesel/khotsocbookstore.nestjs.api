@@ -19,6 +19,7 @@ export class UpdateUserDto {
   @IsDefined()
   @IsString()
   @ApiModelProperty()
+
   id: string;
 
   @IsNotEmpty()
