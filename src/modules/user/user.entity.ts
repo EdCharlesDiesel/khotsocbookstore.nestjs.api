@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('User')
@@ -6,6 +6,21 @@ export class User  {
 
     @PrimaryGeneratedColumn("uuid")
     public id: string;
+    @Column({
+        type: 'varchar',
+        nullable: false,
+        unique: true
+    })
+    username: string;
+
+    @Column({
+        type: 'varchar',
+        nullable: false
+    })
+    password: string;  @Column({
+        type: 'varchar',
+        nullable: false
+    })
 
     @Column("varchar", { length: 200 },)
     public firstName: string;
@@ -16,12 +31,11 @@ export class User  {
     @Column("varchar", { length: 13 },)
     public idNumber: string;
 
-    //TODO include email validation.
-    @Column("varchar", { length: 200 },)
-    public email: string;
-
-    @Column("varchar", { length: 200 },)
-    public password: string;
+    email: string;
+    @BeforeInsert()  async hashPassword() {
+        const bcrypt = require('bcrypt');
+        this.password = await bcrypt.hash(this.password, 10);
+    }
 
     @Column({ type: 'timestamptz'})
     public birthday: Date;
@@ -34,3 +48,5 @@ export class User  {
     @Column("varchar", { length: 200 },)
     public subscription: string;
 }
+
+

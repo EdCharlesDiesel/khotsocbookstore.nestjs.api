@@ -17,6 +17,7 @@ import { UpdateAuthorDto } from "./dto/update-author.dto";
 //@UseGuards(JwtGuard)
 @ApiTags("Author")
 @Controller("Author")
+//@UseGuards(AuthGuards())
 export class AuthorController {
   constructor(
     private authorService: AuthorService

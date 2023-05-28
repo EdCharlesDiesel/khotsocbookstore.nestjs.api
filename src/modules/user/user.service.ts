@@ -5,10 +5,13 @@ import { User } from "./user.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { IUserService } from "./interfaces/IUserService";
+import { toUserDto } from "../../common/helper/mapper";
+import { LoginUserDto } from "../authentication/dto/LoginUserDto";
+import { IUser } from "./interfaces/IUser";
 
 @Injectable()
 export class UserService implements IUserService {
- 
+
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {
   }
 
@@ -16,17 +19,16 @@ export class UserService implements IUserService {
     return this.userRepository.find();
   }
 
-  public async findOne(user: any): Promise<User> {
-    
-    const userfromDatabase = await this.userRepository.findOneBy({ email: user.email, password: user.password });
+  //FIXME We need to look at the return type.
+  public async findOne(options?: object): Promise<any> {
+    const userFromDatabase = await this.userRepository.findOne(options);
+    if (userFromDatabase) {
 
-    if (userfromDatabase) {
-      return userfromDatabase;
+      return toUserDto(userFromDatabase);
     }
-
-    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    throw new HttpException("User not found", HttpStatus.NOT_FOUND);
   }
-  
+
 
   public async findById(id: string): Promise<User> {
 
@@ -35,14 +37,32 @@ export class UserService implements IUserService {
       return user;
     }
 
-    throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    throw new HttpException("User not found", HttpStatus.NOT_FOUND);
   }
 
-  public async create(user: CreateUserDto): Promise<User> {
-    const userToAdd = await this.userRepository.create(user);
-    await this.userRepository.save(userToAdd);
+  // public async create(user: CreateUserDto): Promise<User> {
+  //   const userToAdd = await this.userRepository.create(user);
+  //   await this.userRepository.save(userToAdd);
+  //
+  //   return userToAdd;
+  // }
 
-    return userToAdd;
+  //TODO need to fix the type.
+  public async create(userDto: CreateUserDto): Promise<any> {
+    const { username, password, email } = userDto;
+
+    // check if the user exists in the db
+    const userInDb = await this.userRepository.findOne({
+      where: { username }
+    });
+
+    if (userInDb) {
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+    }
+
+    const user: any = await this.userRepository.create({ username, password, email});
+    await this.userRepository.save(user);
+    return user;
   }
 
   public async update(id: string, newUser: UpdateUserDto): Promise<User> {
@@ -60,8 +80,37 @@ export class UserService implements IUserService {
   }
 
   //FIXME fix the loging service.
-  public async login( email: string, password: string ) : Promise<User> {
+  public async login(email: string, password: string): Promise<User> {
     return new User;
+  }
+
+  public async findByLogin({ username, password }: LoginUserDto): Promise<IUser> {
+    const user = await this.userRepository.findOne({ where: { username } });
+
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
+    }
+
+    // compare passwords
+    const areEqual = await this.comparePasswords(user.password, password);
+
+    if (!areEqual) {
+      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+    }
+
+    return toUserDto(user);
+  }
+
+  //FIXME this method is not working as expected
+
+  private async comparePasswords(password, password2: string) : Promise<boolean>{
+
+    return true;
+  }
+
+  public async findByPayload({ username }: any): Promise<IUser> {
+    return await this.findOne({
+      where:  { username } });
   }
 
 }
