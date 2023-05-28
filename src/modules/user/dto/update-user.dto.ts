@@ -13,12 +13,19 @@ import {
 
 export class UpdateUserDto {
 
+
   @IsEmail()
   @IsNotEmpty()
   @IsDefined()
   @IsString()
   @ApiModelProperty()
   id: string;
+
+  @IsNotEmpty()
+  @IsDefined()
+  @IsString()
+  @ApiModelProperty()
+  username: string;
 
   @IsEmail()
   @IsNotEmpty()

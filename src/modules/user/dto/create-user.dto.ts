@@ -10,6 +10,12 @@ import {
 import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export class CreateUserDto {
+
+  @IsNotEmpty()
+  @IsDefined()
+  @IsString()
+  @ApiModelProperty()
+  username: string;
   @IsEmail()
   @IsNotEmpty()
   @IsDefined()

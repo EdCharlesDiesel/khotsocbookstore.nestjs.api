@@ -6,11 +6,21 @@ import {
   HttpStatus,
   HttpCode,
   Res,
-  Body
+  Body,
+  HttpException,
+  UseGuards,
+  Get,
+  Req
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { AuthenticationDto } from './dto/authentication.dto';
 import { ApiTags } from "@nestjs/swagger";
+import { CreateUserDto } from '../user/dto/create-user.dto';
+import { RegistrationStatus } from './interfaces/regisration-status.interface';
+import { LoginUserDto } from './dto/LoginUserDto';
+import { LoginStatus } from './interfaces/login-status.interface';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtPayload } from './interfaces/payload.interface';
 
 @ApiTags("Authentication")
 @Controller('Authentication')
@@ -20,25 +30,30 @@ export class AuthenticationController {
     private readonly userService: UserService
   ) { }
 
+
+  @Post('register')
+  public async register(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<RegistrationStatus> {
+    const result: RegistrationStatus = await this.authenticationService.register(
+      createUserDto,
+    );
+
+    if (!result.success) {
+      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+    }
+
+    return result;
+  }
+
   @Post('login')
-  @HttpCode(HttpStatus.OK)
-  public async login(@Body() body: AuthenticationDto, @Res() res): Promise<any> {
-    if (!body.email || !body.password) {
-      return res
-        .status(HttpStatus.BAD_REQUEST)
-        .send('Missing email or password.');
-    }
+  public async login(@Body() loginUserDto: LoginUserDto): Promise<LoginStatus> {
+    return await this.authenticationService.login(loginUserDto);
+  }
 
-    const user = await this.userService.login(body.email, body.password,);
-
-
-    if (!user) {
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .send('No user found with this email and password.');
-    }
-
-    const result = this.authenticationService.createToken(user.email);
-    return res.json(result);
+  @Get('whoami')
+  @UseGuards(AuthGuard())
+  public async testAuth(@Req() req: any): Promise<JwtPayload> {
+    return req.user;
   }
 }
