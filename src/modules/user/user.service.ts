@@ -5,9 +5,10 @@ import { User } from "./user.entity";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { IUserService } from "./interfaces/IUserService";
-import { toUserDto } from "../../common/helper/mapper";
+import { toUserDto } from "../../shared/helper/mapper";
 import { LoginUserDto } from "../authentication/dto/LoginUserDto";
 import { IUser } from "./interfaces/IUser";
+import { comparePasswords } from '../../shared/helper/utils';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -94,20 +95,13 @@ export class UserService implements IUserService {
     }
 
     // compare passwords
-    const areEqual = await this.comparePasswords(user.password, password);
+    const areEqual = await comparePasswords(user.password, password);
 
     if (!areEqual) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
 
     return toUserDto(user);
-  }
-
-  //FIXME this method is not working as expected
-
-  private async comparePasswords(password, password2: string) : Promise<boolean>{
-
-    return true;
   }
 
   public async findByPayload({ username }: any): Promise<IUser> {
