@@ -49,18 +49,20 @@ export class UserService implements IUserService {
 
   //TODO need to fix the type.
   public async create(userDto: CreateUserDto): Promise<any> {
-    const { username, password, email } = userDto;
+    //const { username, password, email } = userDto;
 
     // check if the user exists in the db
     const userInDb = await this.userRepository.findOne({
-      where: { username }
+      where: { 
+        username: userDto.username
+       }
     });
 
     if (userInDb) {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     }
 
-    const user: any = await this.userRepository.create({ username, password, email});
+    const user: any = await this.userRepository.create(userDto);
     await this.userRepository.save(user);
     return user;
   }
