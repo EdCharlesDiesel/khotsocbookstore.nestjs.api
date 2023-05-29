@@ -21,7 +21,7 @@ export class ShipmentService implements IShipmentService {
 
   public async findById(id: string): Promise<Shipment> {
 
-    const shipment = await this.shipmentRepository.findOneBy({ id });
+    const shipment = await this.shipmentRepository.findOneBy({ shipment_id: id });
     if (shipment) {
       return shipment;
     }
@@ -37,7 +37,7 @@ export class ShipmentService implements IShipmentService {
   }
 
   public async update(id: string, newShipment: UpdateShippingDto): Promise<Shipment> {
-    const shipment = await this.shipmentRepository.findBy({ id });
+    const shipment = await this.shipmentRepository.findBy({ shipment_id:id });
     if (!shipment) {
       throw new Error("The shipment was not found.");
     } else {

@@ -13,42 +13,42 @@ import { Payment } from "./payment.entity";
 
 @Injectable()
 export class PaymentService implements IPaymentService {
-  constructor(@InjectRepository(Payment) private readonly bookRepository: Repository<Payment>) {
+  constructor(@InjectRepository(Payment) private readonly paymentRepository: Repository<Payment>) {
   }
 
   findAll(): Promise<Payment[]> {
-    return this.bookRepository.find();
+    return this.paymentRepository.find();
   }
 
   public async findById(id: string): Promise<Payment> {
 
-    const book = await this.bookRepository.findOneBy({ id });
-    if (book) {
-      return book;
+    const payment = await this.paymentRepository.findOneBy({ payment_id: id });
+    if (payment) {
+      return payment;
     }
 
     throw new HttpException('Payment not found', HttpStatus.NOT_FOUND);
   }
 
-  public async create(book: CreatePaymentDto): Promise<Payment> {
-    const bookToAdd = await this.bookRepository.create(book);
-    await this.bookRepository.save(bookToAdd);
+  public async create(payment: CreatePaymentDto): Promise<Payment> {
+    const paymentToAdd = await this.paymentRepository.create(payment);
+    await this.paymentRepository.save(paymentToAdd);
 
-    return bookToAdd;
+    return paymentToAdd;
   }
 
   public async update(id: string, newPayment: UpdatePaymentDto): Promise<Payment> {
-    const book = await this.bookRepository.findBy({ id });
-    if (!book) {
-      throw new Error("The book was not found.");
+    const payment = await this.paymentRepository.findBy({ payment_id: id });
+    if (!payment) {
+      throw new Error("The payment was not found.");
     } else {
-      await this.bookRepository.update(id, newPayment);
+      await this.paymentRepository.update(id, newPayment);
       return;
     }
   }
 
   public async delete(id: string): Promise<void> {
-    await this.bookRepository.delete(id);
+    await this.paymentRepository.delete(id);
   }
 
 }

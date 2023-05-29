@@ -1,41 +1,22 @@
 import {
   IsDate,
-  IsNotEmpty, IsNumber,
+   IsNumber,
   IsOptional,
-  IsString
-} from "class-validator";
+  } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateOrderItemDto {
 
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  title?: string;
-
   @IsDate()
   @IsOptional()
   @ApiProperty()
-  publishedDate: Date;
+  quantity: number;
 
   @IsNumber()
   @IsOptional()
   @ApiProperty()
-  retailPrice?: number;
+  price?: number;
 
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  coverFileName: string;
 
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty()
-  cost: number;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  userId: string;
 }

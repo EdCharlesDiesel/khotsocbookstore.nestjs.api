@@ -10,35 +10,15 @@ export class UpdateOrderItemDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  id: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  title: string;
+  order_item_id: string;
 
   @IsDate()
   @IsOptional()
   @ApiProperty()
-  publishedDate?: Date;
+  quantity: number;
 
   @IsNumber()
   @IsOptional()
   @ApiProperty()
-  retailPrice?: number;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  coverFileName: string;
-
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty()
-  cost: number;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  userId: string;
+  price?: number;
 }

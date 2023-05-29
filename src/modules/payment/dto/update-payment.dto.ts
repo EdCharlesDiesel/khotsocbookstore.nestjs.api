@@ -10,35 +10,20 @@ export class UpdatePaymentDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  id: string;
+  payment_id: string;
 
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  title: string;
+  payment_method?: string;
 
   @IsDate()
   @IsOptional()
   @ApiProperty()
-  publishedDate?: Date;
+  payment_date: Date;
 
   @IsNumber()
   @IsOptional()
   @ApiProperty()
-  retailPrice?: number;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  coverFileName: string;
-
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty()
-  cost: number;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  userId: string;
+  amount: number;
 }
