@@ -74,10 +74,10 @@ export class OrderItemController {
 
   @Delete(":id")
   public async delete(@User() user: IUser, @Book() book: IOrderItem, @Param("id") id: string, @Res() res) {
-    if (user.id !== book.userId)
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .send("Unable to find the entry.");
+    // if (user.id !== book.userId)
+    //   return res
+    //     .status(HttpStatus.NOT_FOUND)
+    //     .send("Unable to find the entry.");
 
     await this.bookService.delete(id);
     return res.status(HttpStatus.NO_CONTENT).send();

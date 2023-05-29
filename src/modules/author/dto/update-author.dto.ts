@@ -25,9 +25,5 @@ export class UpdateAuthorDto {
   @ApiModelPropertyOptional()
   public lastName: string;
 
-  @IsNotEmpty()
-  @IsOptional()
-  @IsString()
-  @ApiModelPropertyOptional()
-  public bookAuthored: string;
+
 }

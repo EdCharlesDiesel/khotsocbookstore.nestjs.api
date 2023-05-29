@@ -10,35 +10,33 @@ export class UpdateShippingDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  id: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  title: string;
+  shipment_id: string;
 
   @IsDate()
   @IsOptional()
   @ApiProperty()
-  publishedDate?: Date;
-
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty()
-  retailPrice?: number;
+  shipment_date: Date;
 
   @IsString()
   @IsOptional()
   @ApiProperty()
-  coverFileName: string;
-
-  @IsNumber()
+  address: string;
+  @IsString()
   @IsOptional()
   @ApiProperty()
-  cost: number;
+  city: string;
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  province: string;
 
   @IsString()
   @IsOptional()
   @ApiProperty()
-  userId: string;
+  country: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  zip_code: string;
 }

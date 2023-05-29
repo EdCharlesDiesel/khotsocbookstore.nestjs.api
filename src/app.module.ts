@@ -5,15 +5,16 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { UserModule } from "./modules/user/user.module";
 import { AuthorModule } from "./modules/author/author.module";
-import { BookModule } from "./modules/book/book.module";
 import { CartModule } from "./modules/cart/cart.module";
 import { AuthenticationModule } from "./modules/authentication/authentication.module";
 import { OrderModule } from "./modules/order/order.module";
-import { OrderItem } from "./modules/order-Item/order-item.entity";
 import { PaymentModule } from "./modules/payment/payment.module";
 import { ShipmentModule } from "./modules/shipment/shipment.module";
 import { OrderItemModule } from "./modules/order-Item/order-item.module";
 import { CustomerModule } from "./modules/customer/customer.module";
+import { WishlistModule } from "./modules/wishList/wishlist.module";
+import { ProductModule } from "./modules/product/product.module";
+import { CategoryModule } from "./modules/category/category.module";
 
 @Module({
   imports: [
@@ -30,14 +31,16 @@ import { CustomerModule } from "./modules/customer/customer.module";
     }),
     AuthenticationModule,
     AuthorModule,
-    BookModule,
+    CategoryModule,
     CustomerModule,
     CartModule,
+    ProductModule,
     PaymentModule,
     OrderModule,
     OrderItemModule,
     ShipmentModule,
     UserModule,
+    WishlistModule
   ],
   controllers: [AppController],
   providers: [AppService]

@@ -12,30 +12,17 @@ export class CreatePaymentDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  title?: string;
+  payment_method?: string;
 
   @IsDate()
   @IsOptional()
   @ApiProperty()
-  publishedDate: Date;
-
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty()
-  retailPrice?: number;
+  payment_date: Date;
 
   @IsString()
   @IsOptional()
   @ApiProperty()
-  coverFileName: string;
+  amount: number;
 
-  @IsNumber()
-  @IsOptional()
-  @ApiProperty()
-  cost: number;
 
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  userId: string;
 }

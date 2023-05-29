@@ -20,7 +20,7 @@ export class OrderService implements IOrderService {
 
   public async findById(id: string): Promise<Order> {
 
-    const orderItem = await this.orderItemRepository.findOneBy({ id });
+    const orderItem = await this.orderItemRepository.findOneBy({ order_id: id });
     if (orderItem) {
       return orderItem;
     }
@@ -36,7 +36,7 @@ export class OrderService implements IOrderService {
   }
 
   public async update(id: string, newOrderItem: UpdateOrderDto): Promise<Order> {
-    const orderItem = await this.orderItemRepository.findBy({ id });
+    const orderItem = await this.orderItemRepository.findBy({ order_id: id });
     if (!orderItem) {
       throw new Error("The orderItem was not found.");
     } else {

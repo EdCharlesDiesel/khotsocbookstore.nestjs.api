@@ -1,30 +1,21 @@
-import { get } from "http";
-import { AuthorDecorator } from "src/shared/decorator/author.decorator";
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, } from "typeorm";
-import { Author } from "../author/author.entity";
+import { Column, Entity, PrimaryGeneratedColumn, } from "typeorm";
+
 
 @Entity('Payment')
 export class Payment {
     @PrimaryGeneratedColumn("uuid")
-    public id: string;
+    public payment_id: string;
 
     @Column("varchar", { length: 200 },)
-    public title: string;
+    public payment_method: string;
 
     @Column({ type: 'timestamptz'})
-    public publishedDate: Date;
+    public payment_date: Date;
 
     @Column({ type: "int", width: 200 })
-    public retailPrice: number;
+    public amount: number;
 
-    @Column("varchar", { length: 200 })
-    public coverFileName: string;
 
-    @Column({ type: "int", width: 200 })
-    public cost: number;
-
-    @Column("varchar", { length: 200 })
-    public userId: string;
 
 
 }

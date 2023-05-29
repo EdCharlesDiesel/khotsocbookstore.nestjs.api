@@ -21,10 +21,6 @@ export class CreateAuthorDto {
   @ApiModelProperty()
   public lastName: string;
 
-  @IsNotEmpty()
-  @IsOptional()
-  @IsString()
-  @ApiModelPropertyOptional()
-  public bookAuthored: string;
+
 
 }

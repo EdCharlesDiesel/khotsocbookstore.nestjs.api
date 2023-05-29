@@ -1,34 +1,30 @@
-import { get } from "http";
-import { AuthorDecorator } from "src/shared/decorator/author.decorator";
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, } from "typeorm";
-import { Author } from "../author/author.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Order } from "../order/order.entity";
 
 @Entity('Shipment')
 export class Shipment {
     @PrimaryGeneratedColumn("uuid")
-    public id: string;
+    public shipment_id: string;
 
     @Column("varchar", { length: 200 },)
-    public title: string;
+    public address: string;
 
     @Column({ type: 'timestamptz'})
-    public publishedDate: Date;
-
-    @Column({ type: "int", width: 200 })
-    public retailPrice: number;
+    public shipment_date: Date;
 
     @Column("varchar", { length: 200 })
-    public coverFileName: string;
-
-    @Column({ type: "int", width: 200 })
-    public cost: number;
+    public city: string;
 
     @Column("varchar", { length: 200 })
-    public userId: string;
+    public province: string;
 
-    // @OneToOne
-    // public publisher: string;
+    @Column("varchar", { length: 200 })
+    public country: string;
 
-    @OneToMany(() => Author, (author) => author.bookAuthored)
-    public authors: Author[]
+    @Column("varchar", { length: 200 })
+    public postal_code: string;
+
+    @OneToMany(() => Order, (order) => order.Shipment_shipment_id )
+    orders: Order[]
+
 }
