@@ -14,13 +14,13 @@ import { IBook } from "./interfaces/IBook";
 import { UpdateBookDto } from "./dto/update-book.dto";
 import { User } from "../../shared/decorator/user.decorator";
 import { Book } from "../../shared/decorator/book.decorator";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { IUser } from "../user/interfaces/IUser";
 
 
-//@UseGuards(JwtGuard)
 @ApiTags("Book")
 @Controller("Book")
+@ApiBearerAuth('defaultBearerAuth')
 export class BookController {
   constructor(private bookService: BookService) {
   }

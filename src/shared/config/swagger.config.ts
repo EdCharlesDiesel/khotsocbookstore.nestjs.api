@@ -12,8 +12,6 @@ export const swaggerOptions = new DocumentBuilder()
   .addTag("Book", "end-point with CRUD functions and more.")
   .addTag("Cart", "end-point with CRUD functions and more.")
   .addTag("User", "end-point with CRUD functions and more.")
-
-  //.addBearerAuth('Authorization', 'header', 'apiKey')
   .build();
 
 
