@@ -1,77 +1,109 @@
-// import { Test, TestingModule } from "@nestjs/testing";
-// import { BookController } from "../../book.controller";
-// import { UserService } from "src/modules/user/user.service";
-// import { JwtGuard } from "src/shared/guards/jwt.guard";
-// import { Book } from "../../book.entity";
-// import { BookService } from "../../book.service";
-// import { User } from "src/modules/user/user.entity";
-// const httpMocks = require("node-mocks-http");
-//
-// describe("BookController", () => {
-//   let bookController: BookController;
-//
-//   const mockRequest = httpMocks.createRequest();
-//
-//   const mockUser: User = {
-//     id: '1',
-//     firstName: '',
-//     lastName: '',
-//     idNumber: '',
-//     email: '',
-//     password: '',
-//     birthday: new Date(),
-//     role: '',
-//     subscription: ''
-//   };
-//
-//   const mockBook: Book = {
-//     id: '1',
-//     coverFileName: '',
-//     title: '',
-//     cost: 0,
-//     retailPrice: 0,
-//     publishedDate: new Date(),
-//     userId: mockUser.firstName
-//   };
-//
-//
-//   const mockBookService = {
-//     createBook: jest
-//       .fn()
-//       .mockImplementation((user: User, book: Book) => {
-//         return {
-//           id: 1,
-//           ...book,
-//         };
-//       })
-//   };
-//
-//   const mockUserService = {};
-//
-//   // create fake module
-//   beforeEach(async () => {
-//     const moduleRef: TestingModule = await Test.createTestingModule({
-//       controllers: [BookController],
-//       providers: [
-//         BookService,
-//         { provide: UserService, useValue: mockUserService },
-//         {
-//           provide: JwtGuard,
-//           useValue: jest.fn().mockImplementation(() => true),
-//         },
-//       ],
-//     })
-//       .overrideProvider(BookService)
-//       .useValue(mockBookService)
-//       .compile();
-//
-//     bookController = moduleRef.get<BookController>(BookController);
-//   });
-//
-//   it("should create a book", () => {
-//     expect(bookController.create(mockUser, mockBook, mockRequest)).toEqual({
-//       id: expect.any(String),
-//       ...mockBook,
-//     });
-//   });
-// });
+import { Test, TestingModule } from "@nestjs/testing";
+import { BookController } from "../../book.controller";
+import { BookService } from "../../book.service";
+import { CreateBookDto } from "../../dto/create-book.dto";
+import { IUser } from "src/modules/user/interfaces/IUser";
+
+
+
+
+const createBookDto: CreateBookDto = {
+  firstName: 'firstName #1',
+  lastName: 'lastName #1',
+  bookBooked: 'lastName #1'
+};
+
+describe('BooksController', () => {
+  let booksController: BookController;
+  let booksService: BookService;
+
+  beforeEach(async () => {
+    const app: TestingModule = await Test.createTestingModule({
+      controllers: [BookController],
+      providers: [ //  <---------- THIS IS THE MOST IMPORTANT SECTION TO SOLVE THIS ISSUE.
+        {
+          provide: BookService,
+          useValue: {
+            create: jest
+              .fn()
+              .mockImplementation((book: CreateBookDto) =>
+                Promise.resolve({ id: '1', ...book }),
+              ),
+            findAll: jest.fn().mockResolvedValue([
+              {
+                firstName: 'firstName #1',
+                lastName: 'lastName #1',
+                bookBooked: 'lastName #1'
+              },
+              {
+                firstName: 'firstName #2',
+                lastName: 'lastName #2',
+                bookBooked: 'lastName #1'
+              },
+            ]),
+            findOne: jest.fn().mockImplementation((id: string) =>
+              Promise.resolve({
+                firstName: 'firstName #1',
+                lastName: 'lastName #1',
+                bookBooked: 'lastName #1',
+                id,
+              }),
+            ),
+            remove: jest.fn(),
+          },
+        },
+      ],
+    }).compile();
+
+    booksController = app.get<BookController>(BookController);
+    booksService = app.get<BookService>(BookService);
+  });
+
+  it('should be defined', () => {
+    expect(booksController).toBeDefined();
+  });
+
+  describe('create()', () => {
+    let user: IUser = {        
+        firstName: '',
+        lastName : 'Mokhethi',
+        email : 'Mokhetkc@hotmail.com',
+        birthday : new Date().getDate,
+    }
+    it('should create a book', () => {
+      expect(booksController.create(createBookDto)).resolves.toEqual({
+        id: '1',
+        ...createBookDto,
+      });
+      expect(booksService.create).toHaveBeenCalled();
+      expect(booksService.create).toHaveBeenCalledWith(createBookDto);
+    });
+  });
+
+  describe('findAll()', () => {
+    it('should find all books ', () => {
+      booksController.getAllBooks();
+      expect(booksService.findAll).toHaveBeenCalled();
+    });
+  });
+
+  // describe('findOne()', () => {
+  //   it('should find a book', () => {
+  //     booksController.getBookById('1');
+  //     expect(booksService.findById('1')).toHaveBeenCalled();
+  //     expect(booksController.getBookById('1')).resolves.toEqual({
+  //       bookBooked: 'lastName #1',
+  //       firstName: 'firstName #1',
+  //       lastName: 'lastName #1',
+  //       id: '1',
+  //     });
+  //   });
+  // });
+  //
+  // describe('remove()', () => {
+  //   it('should remove the book', () => {
+  //     booksController.delete('2');
+  //     expect(booksService.delete('2')).toHaveBeenCalled();
+  //   });
+  // });
+});
