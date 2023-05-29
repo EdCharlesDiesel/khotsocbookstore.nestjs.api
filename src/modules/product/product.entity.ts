@@ -23,7 +23,7 @@ export class Product {
     @Column({ type: "int", width: 200 })
     public stock: number;
 
-    @ManyToOne(() => Product, (shipment) => shipment.Category_category_id)
+    @ManyToOne(() => Product, (product) => product.product_id)
     Category_category_id: Product;
 
     @OneToMany(() => Cart, (cart) => cart.cart_id )
