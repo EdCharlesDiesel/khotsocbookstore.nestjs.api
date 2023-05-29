@@ -1,11 +1,5 @@
 export class TwoNumberSum {
- // array_: number[];
- // targetSum_: number;
- //  constructor(array: number[], targetSum: number) {
- //    this.array_ = array;
- //    this.targetSum_ = targetSum;
- //  }
-  public twoNumberSum(array_: number[], targetSum_: number): any[] {
+ public twoNumberSum(array_: number[], targetSum_: number): any[] {
     array_.sort((a, b) => a - b);
     let left = 0;
     let right = array_.length - 1;

@@ -7,15 +7,14 @@ import {
     Param,
     Post, Put, Res
 } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { UserService } from "./user.service";
 
-
-//@UseGuards(JwtGuard)
 @ApiTags("User")
 @Controller("User")
+@ApiBearerAuth('defaultBearerAuth')
 export class UserController {
     constructor(private userService: UserService) {
     }

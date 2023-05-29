@@ -4,20 +4,19 @@ import {
   Delete,
   Get,
   Param,
-  Post, Put, Res,
+  Post, Put, Res
 } from "@nestjs/common";
 
 import { AuthorService } from "./author.service";
 import { Author } from "../../shared/decorator/author.decorator";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { CreateAuthorDto } from "./dto/create-author.dto";
 import { UpdateAuthorDto } from "./dto/update-author.dto";
 
 
-//@UseGuards(JwtGuard)
 @ApiTags("Author")
 @Controller("Author")
-//@UseGuards(AuthGuards())
+@ApiBearerAuth('defaultBearerAuth')
 export class AuthorController {
   constructor(
     private authorService: AuthorService

@@ -14,13 +14,14 @@ import { CreateCartDto } from "./dto/create-cart.dto";
 import { ICart } from "./interfaces/ICart";
 import { EditCartDto } from "./dto/edit-cart.dto";
 import { User } from "../../shared/decorator/user.decorator";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { Cart } from "../../shared/decorator/cart.decorator";
 
 
 //@UseGuards(JwtGuard)
 @ApiTags("Cart")
 @Controller("Cart")
+@ApiBearerAuth('defaultBearerAuth')
 export class CartController {
   constructor(
     private cartService: CartService
