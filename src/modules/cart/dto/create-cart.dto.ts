@@ -10,10 +10,7 @@ export class CreateCartDto {
   @IsNumber()
   @IsOptional()
   @ApiProperty()
-  cartTotal: number;
+  quantity: number;
 
-  @IsString()
-  @IsOptional()
-  @ApiProperty()
-  userId: string;
+
 }

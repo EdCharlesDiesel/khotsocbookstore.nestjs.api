@@ -8,7 +8,7 @@ import {
 } from "@nestjs/common";
 
 import { AuthorService } from "./author.service";
-import { Author } from "../../shared/decorator/author.decorator";
+import { AuthorDecorator } from "../../shared/decorator/author.decorator";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { CreateAuthorDto } from "./dto/create-author.dto";
 import { UpdateAuthorDto } from "./dto/update-author.dto";

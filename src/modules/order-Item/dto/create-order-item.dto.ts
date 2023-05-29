@@ -6,16 +6,33 @@ import {
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class EditCartDto {
+export class CreateOrderItemDto {
+
+
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  id: string;
+  title?: string;
+
+  @IsDate()
+  @IsOptional()
+  @ApiProperty()
+  publishedDate: Date;
 
   @IsNumber()
   @IsOptional()
   @ApiProperty()
-  cartTotal: number;
+  retailPrice?: number;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  coverFileName: string;
+
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty()
+  cost: number;
 
   @IsString()
   @IsOptional()

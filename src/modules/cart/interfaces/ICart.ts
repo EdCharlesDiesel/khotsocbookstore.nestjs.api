@@ -1,5 +1,5 @@
 export interface ICart {
-   id: string;
-   cartTotal: number;
-   userId: string;
+   cart_id: string;
+   quantity: number;
+
 }

@@ -7,61 +7,61 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ICartService } from "./interfaces/ICartService";
 import { CreateCartDto } from "./dto/create-cart.dto";
-import { EditCartDto } from "./dto/edit-cart.dto";
+import { UpdateCartDto } from "./dto/update-cart.dto";
 import { Cart } from "./cart.entity";
 
 @Injectable()
 export class CartService implements ICartService {
-  constructor(@InjectRepository(Cart) private readonly bookRepository: Repository<Cart>) {
+  constructor(@InjectRepository(Cart) private readonly cartRepository: Repository<Cart>) {
   }
 
   findAll(): Promise<Cart[]> {
-    return this.bookRepository.find();
+    return this.cartRepository.find();
   }
 
   public async findById(id: string): Promise<Cart> {
 
-    const book = await this.bookRepository.findOneBy({id});
-    if (book) {
-      return book;
+    const cart = await this.cartRepository.findOneBy({cart_id: id});
+    if (cart) {
+      return cart;
     }
 
     throw new HttpException('Cart not found', HttpStatus.NOT_FOUND);
   }
 
-  public async create(book: CreateCartDto): Promise<Cart> {
-    const bookToAdd = await this.bookRepository.create(book);
-    await this.bookRepository.save(bookToAdd);
+  public async create(cart: CreateCartDto): Promise<Cart> {
+    const cartToAdd = await this.cartRepository.create(cart);
+    await this.cartRepository.save(cartToAdd);
 
-    return bookToAdd;
+    return cartToAdd;
   }
 
-  public async update(id: string, newCart: EditCartDto): Promise<Cart> {
-    const book = await this.bookRepository.findBy({ id });
-    if (!book) {
-      throw new Error("The book was not found.");
+  public async update(id: string, newCart: UpdateCartDto): Promise<Cart> {
+    const cart = await this.cartRepository.findBy({ cart_id: id });
+    if (!cart) {
+      throw new Error("The cart was not found.");
     } else {
-      await this.bookRepository.update(id, newCart);
+      await this.cartRepository.update(id, newCart);
       return;
     }
   }
 
   public async delete(id: string): Promise<void> {
-    await this.bookRepository.delete(id);
+    await this.cartRepository.delete(id);
   }
 
 }
 
 //TODO Will implement later
 // getCarts(userId: string) {
-//   return this.bookRepository.find({
+//   return this.cartRepository.find({
 //     where: {
-//       bookId: userId
+//       cartId: userId
 //     }
 //   });
 // }
 //
-// getCartmarkById(userId: string, bookId: string) {
+// getCartmarkById(userId: string, cartId: string) {
 //
 // }
 
