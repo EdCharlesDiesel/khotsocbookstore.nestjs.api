@@ -8,7 +8,7 @@ export interface IUser {
   idNumber: string;
   email: string;
   password: string;
-  birthday: Date;
+  birthday: Date | any;
   role: string;
   subscription: string;
 }

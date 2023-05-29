@@ -8,6 +8,12 @@ import { AuthorModule } from "./modules/author/author.module";
 import { BookModule } from "./modules/book/book.module";
 import { CartModule } from "./modules/cart/cart.module";
 import { AuthenticationModule } from "./modules/authentication/authentication.module";
+import { OrderModule } from "./modules/order/order.module";
+import { OrderItem } from "./modules/order-Item/order-item.entity";
+import { PaymentModule } from "./modules/payment/payment.module";
+import { ShipmentModule } from "./modules/shipment/shipment.module";
+import { OrderItemModule } from "./modules/order-Item/order-item.module";
+import { CustomerModule } from "./modules/customer/customer.module";
 
 @Module({
   imports: [
@@ -20,15 +26,17 @@ import { AuthenticationModule } from "./modules/authentication/authentication.mo
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       synchronize: true,
-      // ssl: {
-      //   rejectUnauthorized: false,
-      // },
       autoLoadEntities: true
     }),
     AuthenticationModule,
     AuthorModule,
     BookModule,
+    CustomerModule,
     CartModule,
+    PaymentModule,
+    OrderModule,
+    OrderItemModule,
+    ShipmentModule,
     UserModule,
   ],
   controllers: [AppController],

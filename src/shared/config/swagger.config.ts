@@ -10,8 +10,15 @@ export const swaggerOptions = new DocumentBuilder()
   .addTag("Authentication", "Authentication end-point.")
   .addTag("Author", "end-point with CRUD function and more.")
   .addTag("Book", "end-point with CRUD functions and more.")
+  .addTag("Customer", "end-point with CRUD functions and more.")
+  .addTag("Category", "end-point with CRUD functions and more.")
   .addTag("Cart", "end-point with CRUD functions and more.")
+  .addTag("Order", "end-point with CRUD functions and more.")
+  .addTag("OrderItem", "end-point with CRUD functions and more.")
+  .addTag("Shipment", "end-point with CRUD functions and more.")
+  .addTag("Payment", "end-point with CRUD functions and more.")
   .addTag("User", "end-point with CRUD functions and more.")
+  .addTag("WishList", "end-point with CRUD functions and more.")
   .build();
 
 

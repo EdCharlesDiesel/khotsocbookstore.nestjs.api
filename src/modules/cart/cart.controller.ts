@@ -12,7 +12,7 @@ import { CartService } from "./cart.service";
 import { IUser } from "../user/interfaces/IUser";
 import { CreateCartDto } from "./dto/create-cart.dto";
 import { ICart } from "./interfaces/ICart";
-import { EditCartDto } from "./dto/edit-cart.dto";
+import { UpdateCartDto } from "./dto/update-cart.dto";
 import { User } from "../../shared/decorator/user.decorator";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { Cart } from "../../shared/decorator/cart.decorator";
@@ -65,13 +65,13 @@ export class CartController {
     @User() user: IUser,
     @Cart() cart: ICart,
     @Param("id") id: string,
-    @Body() body: EditCartDto,
+    @Body() body: UpdateCartDto,
     @Res() res
   ) {
-    if (user.id !== cart.userId)
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .send("Unable to find the entry.");
+    // if (user.id !== cart.userId)
+    //   return res
+    //     .status(HttpStatus.NOT_FOUND)
+    //     .send("Unable to find the entry.");
 
     const updatedCart = await this.cartService.update(id, body);
 
@@ -89,10 +89,10 @@ export class CartController {
     @Param("id") id: string,
     @Res() res
   ) {
-    if (user.id !== cart.userId)
-      return res
-        .status(HttpStatus.NOT_FOUND)
-        .send("Unable to find the entry.");
+    // if (user.id !== cart.userId)
+    //   return res
+    //     .status(HttpStatus.NOT_FOUND)
+    //     .send("Unable to find the entry.");
 
  await this.cartService.delete(id);
     //return res.status(HttpStatus.NO_CONTENT).send();
