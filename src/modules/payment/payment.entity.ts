@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, } from "typeorm";
+import { Column, Entity,  OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Order } from "../order/order.entity";
 
 
 @Entity('Payment')
@@ -14,6 +15,10 @@ export class Payment {
 
     @Column({ type: "int", width: 200 })
     public amount: number;
+
+    @OneToMany(() => Order, (order) => order.Payment_payment_id)
+    Payment_payment_id: Payment;
+
 
 
 
