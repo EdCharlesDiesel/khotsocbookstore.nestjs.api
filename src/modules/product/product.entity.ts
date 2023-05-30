@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "ty
 import { Order } from "../order/order.entity";
 import { Cart } from "../cart/cart.entity";
 import { Wishlist } from "../wishList/wishlist.entity";
+import { Category } from "../category/category.entity";
 
 @Entity('Product')
 export class Product {
@@ -23,8 +24,8 @@ export class Product {
     @Column({ type: "int", width: 200 })
     public stock: number;
 
-    @ManyToOne(() => Product, (product) => product.product_id)
-    Category_category_id: Product;
+    @ManyToOne(() => Category, (category) => category.category_id)
+    category: Category[];
 
     @OneToMany(() => Cart, (cart) => cart.cart_id )
     carts: Cart[]

@@ -18,7 +18,7 @@ export class Order {
   @ManyToOne(() => Shipment, (shipment) => shipment.orders)
   Shipment_shipment_id: Shipment;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.Order_id)
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order_item_id)
   orderItems: OrderItem[];
 
   @ManyToOne(() => Order, (order) => order.Customer_customer_id)
