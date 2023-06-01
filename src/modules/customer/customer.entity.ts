@@ -1,7 +1,6 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Order } from "../order/order.entity";
 import { Payment } from "../payment/payment.entity";
-import { Shipment } from "../shipment/shipment.entity";
 import { Cart } from "../cart/cart.entity";
 import { Wishlist } from "../wishList/wishlist.entity";
 @Entity('Customer')

@@ -18,4 +18,4 @@ async function writeDoc() {
     );
 }
 
-writeDoc();
+writeDoc().then(() => console.log('Swagger Document written!'));

@@ -18,8 +18,8 @@ import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { IUser } from "../user/interfaces/IUser";
 
 
-@ApiTags("Book")
-@Controller("Book")
+@ApiTags("Product")
+@Controller("Product")
 @ApiBearerAuth('defaultBearerAuth')
 export class ProductController {
   constructor(private bookService: ProductService) {
