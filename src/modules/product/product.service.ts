@@ -15,8 +15,12 @@ export class ProductService implements IProductService {
   constructor(@InjectRepository(Product) private readonly productRepository: Repository<Product>) {
   }
 
-  findAll(): Promise<Product[]> {
-    return this.productRepository.find();
+  public async  findAll(): Promise<Product[]> {
+    const products = await this.productRepository.find();
+    if (products) {
+      return products;
+    }
+    throw new HttpException('Products not found', HttpStatus.NOT_FOUND);
   }
 
   public async findById(id: string): Promise<Product> {
