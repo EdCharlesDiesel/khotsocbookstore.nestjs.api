@@ -12,6 +12,7 @@ import { Shipment } from "../../../shipment/shipment.entity";
 import { OrderItem } from "../../../order-Item/order-item.entity";
 import { Category } from "../../../category/category.entity";
 import { HttpException, HttpStatus } from "@nestjs/common";
+import { CreateProductDto } from "../../dto/create-product.dto";
 
 let cartITEMS: Cart[] = [
   {
@@ -152,107 +153,103 @@ describe("ProductService", () => {
     });
   });
 
-  // describe("Method create", () => {
-  //
-  //   let product =
-  //     {
-  //       product_id: "1",
-  //       name: "My First Item",
-  //       description: "The description of the first item",
-  //       SKU: "",
-  //       price: 3000,
-  //       stock: 88,
-  //       carts: cartITEMS,
-  //       category: categories,
-  //       orders: orders,
-  //       wishlists: wishlists
-  //     }
-  //
-  //   it("it should return 1 item", async () => {
-  //     jest.spyOn(productRepository, "findOneBy").mockResolvedValueOnce(product);
-  //     const result = await service.findById(product.product_id);
-  //     expect(result).toEqual(product);
-  //   });
-  //
-  //   it("it must generate an error, findById return an error", async () => {
-  //     jest.spyOn(productRepository, "findOneBy").mockImplementation(() => {
-  //       throw  new HttpException("Product not found", HttpStatus.NOT_FOUND);
-  //     });
-  //     try {
-  //       await service.findById(product.product_id);
-  //     } catch (err) {
-  //       expect(err.message).toContain("Product not found");
-  //     }
-  //   });
-  // });
-  //
-  // describe("Method update", () => {
-  //
-  //   let product =
-  //     {
-  //       product_id: "1",
-  //       name: "My First Item",
-  //       description: "The description of the first item",
-  //       SKU: "",
-  //       price: 3000,
-  //       stock: 88,
-  //       carts: cartITEMS,
-  //       category: categories,
-  //       orders: orders,
-  //       wishlists: wishlists
-  //     }
-  //
-  //   it("it should return 1 item", async () => {
-  //     jest.spyOn(productRepository, "findOneBy").mockResolvedValueOnce(product);
-  //     const result = await service.findById(product.product_id);
-  //     expect(result).toEqual(product);
-  //   });
-  //
-  //   it("it must generate an error, findById return an error", async () => {
-  //     jest.spyOn(productRepository, "findOneBy").mockImplementation(() => {
-  //       throw  new HttpException("Product not found", HttpStatus.NOT_FOUND);
-  //     });
-  //     try {
-  //       await service.findById(product.product_id);
-  //     } catch (err) {
-  //       expect(err.message).toContain("Product not found");
-  //     }
-  //   });
-  // });
-  //
-  // describe("Method delete", () => {
-  //
-  //   let product =
-  //     {
-  //       product_id: "1",
-  //       name: "My First Item",
-  //       description: "The description of the first item",
-  //       SKU: "",
-  //       price: 3000,
-  //       stock: 88,
-  //       carts: cartITEMS,
-  //       category: categories,
-  //       orders: orders,
-  //       wishlists: wishlists
-  //     }
-  //
-  //   it("it should return 1 item", async () => {
-  //     jest.spyOn(productRepository, "findOneBy").mockResolvedValueOnce(product);
-  //     const result = await service.findById(product.product_id);
-  //     expect(result).toEqual(product);
-  //   });
-  //
-  //   it("it must generate an error, findById return an error", async () => {
-  //     jest.spyOn(productRepository, "findOneBy").mockImplementation(() => {
-  //       throw  new HttpException("Product not found", HttpStatus.NOT_FOUND);
-  //     });
-  //     try {
-  //       await service.findById(product.product_id);
-  //     } catch (err) {
-  //       expect(err.message).toContain("Product not found");
-  //     }
-  //   });
-  // });
+  describe("Method create", () => {
+
+    let product: any =
+      {
+        name: "My First Item",
+        description: "The description of the first item",
+        SKU: "",
+        price: 3000,
+        stock: 88
+      }
+
+    it("it should create product resource", async () => {
+      jest.spyOn(productRepository, "create").mockImplementation(product);
+
+      const result = await service.create(product);
+      expect(result).toEqual(product);
+    });
+
+    it("it must generate an error, create return an error", async () => {
+      jest.spyOn(productRepository, "create").mockImplementation(() => {
+        throw  new HttpException("HttpStatus.BAD_REQUEST", HttpStatus.BAD_REQUEST);
+      });
+      try {
+        await service.create(product);
+      } catch (err) {
+        expect(err.message).toContain("HttpStatus.BAD_REQUEST");
+      }
+    });
+  });
+
+  describe("Method update", () => {
+
+    let product =
+      {
+        product_id: "1",
+        name: "My First Item",
+        description: "The description of the first item",
+        SKU: "",
+        price: 3000,
+        stock: 88,
+        carts: cartITEMS,
+        category: categories,
+        orders: orders,
+        wishlists: wishlists
+      }
+
+    it("it should return 1 item", async () => {
+      jest.spyOn(productRepository, "findOneBy").mockResolvedValueOnce(product);
+      const result = await service.findById(product.product_id);
+      expect(result).toEqual(product);
+    });
+
+    it("it must generate an error, findById return an error", async () => {
+      jest.spyOn(productRepository, "findOneBy").mockImplementation(() => {
+        throw  new HttpException("Product not found", HttpStatus.NOT_FOUND);
+      });
+      try {
+        await service.findById(product.product_id);
+      } catch (err) {
+        expect(err.message).toContain("Product not found");
+      }
+    });
+  });
+
+  describe("Method delete", () => {
+
+    let product =
+      {
+        product_id: "1",
+        name: "My First Item",
+        description: "The description of the first item",
+        SKU: "",
+        price: 3000,
+        stock: 88,
+        carts: cartITEMS,
+        category: categories,
+        orders: orders,
+        wishlists: wishlists
+      }
+
+    it("it should return 1 item", async () => {
+      jest.spyOn(productRepository, "findOneBy").mockResolvedValueOnce(product);
+      const result = await service.findById(product.product_id);
+      expect(result).toEqual(product);
+    });
+
+    it("it must generate an error, findById return an error", async () => {
+      jest.spyOn(productRepository, "findOneBy").mockImplementation(() => {
+        throw  new HttpException("Product not found", HttpStatus.NOT_FOUND);
+      });
+      try {
+        await service.findById(product.product_id);
+      } catch (err) {
+        expect(err.message).toContain("Product not found");
+      }
+    });
+  });
 
 });
 
