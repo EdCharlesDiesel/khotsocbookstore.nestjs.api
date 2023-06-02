@@ -3,7 +3,7 @@ import { OrderItemService } from '../../order-item.service';
 
 
 
-describe('BookService', () => {
+describe('OrderItemService', () => {
   let service: OrderItemService;
 
   beforeEach(async () => {

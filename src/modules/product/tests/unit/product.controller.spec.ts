@@ -10,27 +10,6 @@ describe("ProductController", () => {
   let productsController: ProductController;
   let productsService: ProductService;
   let request_: any;
-  // let user: IUser = {
-  //     id: '1',
-  //     firstName: '',
-  //     lastName: 'Mokhethi',
-  //     email: 'Mokhetkc@hotmail.com',
-  //     birthday: new Date().getDate,
-  //     idNumber: '515135135155',
-  //     password: 'password',
-  //     role: 'Admin',
-  //     subscription: 'Full Access',
-  //     username: 'EdCharles'
-  // }
-
-  // let createBook: CreateProductDto = {
-  //     userId: user.firstName,
-  //     cost: 300,
-  //     coverFileName: 'pic.jpeg',
-  //     publishedDate: new Date(),
-  //     retailPrice: 100,
-  //     title: "TypeScript"
-  // }
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -45,21 +24,21 @@ describe("ProductController", () => {
                 Promise.resolve({ id: "1", ...product })
               ),
             findAll: jest.fn().mockResolvedValue([
-         {
+              {
                 product_id: "",
                 SKU: "",
                 price: 362,
                 stock: 22,
                 name: "gbbvbbvb"
               },
-           {
+              {
                 product_id: "",
                 SKU: "",
                 price: 362,
                 stock: 22,
                 name: "gbbvbbvb"
               },
-           {
+              {
                 product_id: "",
                 SKU: "",
                 price: 362,
@@ -69,7 +48,7 @@ describe("ProductController", () => {
             ]),
             findOne: jest.fn().mockImplementation((id: string) =>
               Promise.resolve({
-                product_id: '',
+                product_id: "",
                 SKU: "",
                 price: 362,
                 stock: 22,
@@ -92,34 +71,21 @@ describe("ProductController", () => {
 
   describe("create()", () => {
     let myuuid = uuidv4();
-    let user: IUser = {
-      id: myuuid,
-      firstName: "",
-      lastName: "Mokhethi",
-      email: "Mokhetkc@hotmail.com",
-      birthday: new Date().getDate,
-      idNumber: "515135135155",
-      password: "password",
-      role: "Admin",
-      subscription: "Full Access",
-      username: "EdCharles"
-    };
 
-    let createBook: any = {
-      userId: user.firstName,
-      cost: 300,
-      coverFileName: "pic.jpeg",
-      publishedDate: new Date(),
-      retailPrice: 100,
-      title: "TypeScript"
+    let createProduct: CreateProductDto = {
+      name: "Test Product",
+      SKU: "DOO-yy",
+      stock: 55,
+      price: 300,
+      description: "Test Product 1 "
     };
     it("should create a product", () => {
-      expect(productsController.create( createBook, request_)).resolves.toEqual({
+      expect(productsController.create(createProduct, request_)).resolves.toEqual({
         id: myuuid,
-        ...createBook
+        ...createProduct
       });
       expect(productsService.create).toHaveBeenCalled();
-      expect(productsService.create).toHaveBeenCalledWith(createBook);
+      expect(productsService.create).toHaveBeenCalledWith(createProduct);
     });
   });
 
@@ -132,10 +98,10 @@ describe("ProductController", () => {
 
   // describe('findOne()', () => {
   //   it('should find a product', () => {
-  //     productsController.getBookById('1');
+  //     productsController.getProductById('1');
   //     expect(productsService.findById('1')).toHaveBeenCalled();
-  //     expect(productsController.getBookById('1')).resolves.toEqual({
-  //       productBooked: 'lastName #1',
+  //     expect(productsController.getProductById('1')).resolves.toEqual({
+  //       productProducted: 'lastName #1',
   //       firstName: 'firstName #1',
   //       lastName: 'lastName #1',
   //       id: '1',

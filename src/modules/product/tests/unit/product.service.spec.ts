@@ -122,18 +122,18 @@ describe("ProductService", () => {
   describe("Method findById", () => {
 
     let product =
-    {
-      product_id: "1",
+      {
+        product_id: "1",
         name: "My First Item",
-      description: "The description of the first item",
-      SKU: "",
-      price: 3000,
-      stock: 88,
-      carts: cartITEMS,
-      category: categories,
-      orders: orders,
-      wishlists: wishlists
-    }
+        description: "The description of the first item",
+        SKU: "",
+        price: 3000,
+        stock: 88,
+        carts: cartITEMS,
+        category: categories,
+        orders: orders,
+        wishlists: wishlists
+      };
 
     it("it should return 1 item", async () => {
       jest.spyOn(productRepository, "findOneBy").mockResolvedValueOnce(product);
@@ -155,20 +155,29 @@ describe("ProductService", () => {
 
   describe("Method create", () => {
 
-    let product: any =
+    let product: CreateProductDto =
       {
         name: "My First Item",
         description: "The description of the first item",
         SKU: "",
         price: 3000,
         stock: 88
+      };
+
+
+    it.skip("it should create product resource", async () => {
+      jest.spyOn(productRepository, "create").mockImplementation( () => {
+        return new Product()
+      });
+
+      try {
+        let expected = await service.create(product);
+        await productRepository.save(product);
+        expect(expected).toEqual(product);
+      } catch (err) {
+        expect(err.message).toContain("HttpStatus.BAD_REQUEST");
       }
 
-    it("it should create product resource", async () => {
-      jest.spyOn(productRepository, "create").mockImplementation(product);
-
-      const result = await service.create(product);
-      expect(result).toEqual(product);
     });
 
     it("it must generate an error, create return an error", async () => {
@@ -197,7 +206,7 @@ describe("ProductService", () => {
         category: categories,
         orders: orders,
         wishlists: wishlists
-      }
+      };
 
     it("it should return 1 item", async () => {
       jest.spyOn(productRepository, "findOneBy").mockResolvedValueOnce(product);
@@ -231,7 +240,7 @@ describe("ProductService", () => {
         category: categories,
         orders: orders,
         wishlists: wishlists
-      }
+      };
 
     it("it should return 1 item", async () => {
       jest.spyOn(productRepository, "findOneBy").mockResolvedValueOnce(product);

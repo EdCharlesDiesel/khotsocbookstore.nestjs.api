@@ -3,7 +3,7 @@ import { CategoryService } from '../../category.service';
 
 
 
-describe('BookService', () => {
+describe('CategoryService', () => {
   let service: CategoryService;
 
   beforeEach(async () => {

@@ -29,7 +29,6 @@ export class CartController {
   }
   @Post()
   public async create(
-    @User() user: IUser,
     @Body() body: CreateCartDto,
     @Res() res
   ) {

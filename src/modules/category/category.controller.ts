@@ -25,7 +25,7 @@ export class CategoryController {
   }
 
   @Post()
-  public async create(@User() user: IUser, @Body() body: CreateCategoryDto, @Res() res) {
+  public async create(@Body() body: CreateCategoryDto, @Res() res) {
     if (!body || (body && Object.keys(body).length === 0))
       return res
         .status(HttpStatus.BAD_REQUEST)
@@ -41,7 +41,7 @@ export class CategoryController {
   }
 
   @Get()
-  public async getCategorys(@Res() res) {
+  public async getCategories(@Res() res) {
     const categorys = await this.categoryService.findAll();
     return res.status(HttpStatus.OK).json(categorys);
   }

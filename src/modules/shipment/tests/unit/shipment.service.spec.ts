@@ -3,7 +3,7 @@ import { ShipmentService } from '../../shipment.service';
 
 
 
-describe('BookService', () => {
+describe('ShipmentService', () => {
   let service: ShipmentService;
 
   beforeEach(async () => {

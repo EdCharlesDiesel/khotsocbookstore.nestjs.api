@@ -5,7 +5,7 @@ import {
   Get,
   HttpStatus,
   Param,
-  Post, Put, Res
+  Post,  Res
 } from "@nestjs/common";
 
 import { WishlistService } from "./wishlist.service";

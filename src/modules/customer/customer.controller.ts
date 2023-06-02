@@ -25,7 +25,7 @@ export class CustomerController {
   }
 
   @Post()
-  public async create(@User() user: IUser, @Body() body: CreateCustomerDto, @Res() res) {
+  public async create( @Body() body: CreateCustomerDto, @Res() res) {
     if (!body || (body && Object.keys(body).length === 0))
       return res
         .status(HttpStatus.BAD_REQUEST)

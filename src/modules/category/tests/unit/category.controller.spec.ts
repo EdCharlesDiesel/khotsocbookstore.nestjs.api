@@ -1,138 +1,114 @@
-// import { Test, TestingModule } from "@nestjs/testing";
-// import { CategoryController } from "../../category.controller";
-// import { CategoryService } from "../../category.service";
-// import { CreateCategoryDto } from "../../dto/create-category.dto";
-// import { IUser } from "src/modules/user/interfaces/IUser";
-// import {v4 as uuidv4} from 'uuid';
-// describe('BooksController', () => {
-//     let booksController: CategoryController;
-//     let booksService: CategoryService;
-//     let request_: any;
-//     let user: IUser = {
-//         id: '1',
-//         firstName: '',
-//         lastName: 'Mokhethi',
-//         email: 'Mokhetkc@hotmail.com',
-//         birthday: new Date().getDate,
-//         idNumber: '515135135155',
-//         password: 'password',
-//         role: 'Admin',
-//         subscription: 'Full Access',
-//         username: 'EdCharles'
-//     }
-//
-//     let createBook: CreateCategoryDto = {
-//         userId: user.firstName,
-//         cost: 300,
-//         coverFileName: 'pic.jpeg',
-//         publishedDate: new Date(),
-//         retailPrice: 100,
-//         title: "TypeScript"
-//     }
-//
-//     beforeEach(async () => {
-//         const app: TestingModule = await Test.createTestingModule({
-//             controllers: [CategoryController],
-//             providers: [ //  <---------- THIS IS THE MOST IMPORTANT SECTION TO SOLVE THIS ISSUE.
-//                 {
-//                     provide: CategoryService,
-//                     useValue: {
-//                         create: jest
-//                             .fn()
-//                             .mockImplementation((book: CreateCategoryDto) =>
-//                                 Promise.resolve({ id: '1', ...book }),
-//                             ),
-//                         findAll: jest.fn().mockResolvedValue([
-//                             {
-//                                 firstName: 'firstName #1',
-//                                 lastName: 'lastName #1',
-//                                 bookBooked: 'lastName #1'
-//                             },
-//                             {
-//                                 firstName: 'firstName #2',
-//                                 lastName: 'lastName #2',
-//                                 bookBooked: 'lastName #1'
-//                             },
-//                         ]),
-//                         findOne: jest.fn().mockImplementation((id: string) =>
-//                             Promise.resolve({
-//                                 firstName: 'firstName #1',
-//                                 lastName: 'lastName #1',
-//                                 bookBooked: 'lastName #1',
-//                                 id,
-//                             }),
-//                         ),
-//                         remove: jest.fn(),
-//                     },
-//                 },
-//             ],
-//         }).compile();
-//
-//         booksController = app.get<CategoryController>(CategoryController);
-//         booksService = app.get<CategoryService>(CategoryService);
-//     });
-//
-//     it('should be defined', () => {
-//         expect(booksController).toBeDefined();
-//     });
-//
-//     describe('create()', () => {
-//         let myuuid = uuidv4();
-//         let user: IUser = {
-//             id: myuuid,
-//             firstName: '',
-//             lastName: 'Mokhethi',
-//             email: 'Mokhetkc@hotmail.com',
-//             birthday: new Date().getDate,
-//             idNumber: '515135135155',
-//             password: 'password',
-//             role: 'Admin',
-//             subscription: 'Full Access',
-//             username: 'EdCharles'
-//         }
-//
-//         let createBook: any = {
-//             userId: user.firstName,
-//             cost: 300,
-//             coverFileName: 'pic.jpeg',
-//             publishedDate: new Date(),
-//             retailPrice: 100,
-//             title: "TypeScript"
-//         }
-//         it('should create a book', () => {
-//             expect(booksController.create(user, createBook, request_)).resolves.toEqual({
-// id: myuuid,
-//                 ...createBook,
-//             });
-//             expect(booksService.create).toHaveBeenCalled();
-//             expect(booksService.create).toHaveBeenCalledWith(createBook);
-//         });
-//     });
-//
-//     describe('findAll()', () => {
-//         it('should find all books ', () => {
-//             booksController.getBooks(request_);
-//             expect(booksService.findAll).toHaveBeenCalled();
-//         });
-//     });
-//
-//     // describe('findOne()', () => {
-//     //   it('should find a book', () => {
-//     //     booksController.getBookById('1');
-//     //     expect(booksService.findById('1')).toHaveBeenCalled();
-//     //     expect(booksController.getBookById('1')).resolves.toEqual({
-//     //       bookBooked: 'lastName #1',
-//     //       firstName: 'firstName #1',
-//     //       lastName: 'lastName #1',
-//     //       id: '1',
-//     //     });
-//     //   });
-//     // });
-//     //
-//     // describe('remove()', () => {
-//     //   it('should remove the book', () => {
-//     //     booksController.delete('2');
-//     //     expect(booksService.delete('2')).toHaveBeenCalled();
-//     //   });
-//     // });
-// });
+import { Test, TestingModule } from "@nestjs/testing";
+import { CategoryController } from "../../category.controller";
+import { CategoryService } from "../../category.service";
+import { CreateCategoryDto } from "../../dto/create-category.dto";
+import { IUser } from "src/modules/user/interfaces/IUser";
+import { v4 as uuidv4 } from "uuid";
+
+
+describe("CategoryController", () => {
+  let categorysController: CategoryController;
+  let categorysService: CategoryService;
+  let request_: any;
+  let myuuid = uuidv4();
+
+  beforeEach(async () => {
+    const app: TestingModule = await Test.createTestingModule({
+      controllers: [CategoryController],
+      providers: [
+        {
+          provide: CategoryService,
+          useValue: {
+            create: jest
+              .fn()
+              .mockImplementation((category: CreateCategoryDto) =>
+                Promise.resolve({ id: myuuid , ...category })
+              ),
+            findAll: jest.fn().mockResolvedValue([
+              {
+                category_id: "",
+                SKU: "",
+                price: 362,
+                stock: 22,
+                name: "gbbvbbvb"
+              },
+              {
+                category_id: "",
+                SKU: "",
+                price: 362,
+                stock: 22,
+                name: "gbbvbbvb"
+              },
+              {
+                category_id: "",
+                SKU: "",
+                price: 362,
+                stock: 22,
+                name: "gbbvbbvb"
+              }
+            ]),
+            findOne: jest.fn().mockImplementation((id: string) =>
+              Promise.resolve({
+                category_id: "",
+                SKU: "",
+                price: 362,
+                stock: 22,
+                name: "gbbvbbvb"
+              })
+            ),
+            remove: jest.fn()
+          }
+        }
+      ]
+    }).compile();
+
+    categorysController = app.get<CategoryController>(CategoryController);
+    categorysService = app.get<CategoryService>(CategoryService);
+  });
+
+
+  describe("create()", () => {
+
+
+    let createCategory: CreateCategoryDto = {
+      name: 'Programming'
+    };
+
+    let request: any;
+    it("should create a category", () => {
+      expect(categorysController.create(createCategory,request)).resolves.toEqual({
+        id: myuuid,
+        ...createCategory
+      });
+      expect(categorysService.create).toHaveBeenCalled();
+      expect(categorysService.create).toHaveBeenCalledWith(createCategory);
+    });
+  });
+
+  describe("findAll()", () => {
+    it("should find all categorys ", () => {
+      categorysController.getCategories(request_);
+      expect(categorysService.findAll).toHaveBeenCalled();
+    });
+  });
+
+  // describe('findOne()', () => {
+  //   it('should find a category', () => {
+  //     categorysController.getCategoryById('1');
+  //     expect(categorysService.findById('1')).toHaveBeenCalled();
+  //     expect(categorysController.getCategoryById('1')).resolves.toEqual({
+  //       categoryCategoryed: 'lastName #1',
+  //       firstName: 'firstName #1',
+  //       lastName: 'lastName #1',
+  //       id: '1',
+  //     });
+  //   });
+  // });
+  //
+  // describe('remove()', () => {
+  //   it('should remove the category', () => {
+  //     categorysController.delete('2');
+  //     expect(categorysService.delete('2')).toHaveBeenCalled();
+  //   });
+  // });
+});

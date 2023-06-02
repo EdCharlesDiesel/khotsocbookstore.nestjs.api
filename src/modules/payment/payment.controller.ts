@@ -10,7 +10,6 @@ import {
 
 import { PaymentService } from "./payment.service";
 import { CreatePaymentDto } from "./dto/create-payment.dto";
-import { IPayment } from "./interfaces/IPayment";
 import { UpdatePaymentDto } from "./dto/update-payment.dto";
 import { User } from "../../shared/decorator/user.decorator";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
@@ -25,7 +24,7 @@ export class PaymentController {
   }
 
   @Post()
-  public async create(@User() user: IUser, @Body() body: CreatePaymentDto, @Res() res) {
+  public async create( @Body() body: CreatePaymentDto, @Res() res) {
     if (!body || (body && Object.keys(body).length === 0))
       return res
         .status(HttpStatus.BAD_REQUEST)
