@@ -10,7 +10,6 @@ import {
 
 import { CategoryService } from "./category.service";
 import { CreateCategoryDto } from "./dto/create-category.dto";
-import { ICategory } from "./interfaces/ICategory";
 import { UpdateCategoryDto } from "./dto/update-category.dto";
 import { User } from "../../shared/decorator/user.decorator";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
@@ -42,8 +41,8 @@ export class CategoryController {
 
   @Get()
   public async getCategories(@Res() res) {
-    const categorys = await this.categoryService.findAll();
-    return res.status(HttpStatus.OK).json(categorys);
+ return  await this.categoryService.findAll();
+  //  return res.status(HttpStatus.OK).json(categorys);
   }
 
   @Get(":id")

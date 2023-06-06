@@ -37,8 +37,8 @@ export class UserController {
 
     @Get()
     public async getUsers(@Res() res) {
-        const users = await this.userService.findAll();
-        return res.status(HttpStatus.OK).json(users);
+       return  await this.userService.findAll();
+     //   return res.status(HttpStatus.OK).json(users);
     }
 
     @Get(":id")

@@ -1,4 +1,12 @@
-import { Column, Entity,  OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+    VersionColumn
+} from "typeorm";
 import { Order } from "../order/order.entity";
 
 
@@ -18,6 +26,12 @@ export class Payment {
 
     @OneToMany(() => Order, (order) => order.Payment_payment_id)
     Payment_payment_id: Payment;
+    @CreateDateColumn()
+    created_at: Date;
+    @UpdateDateColumn()
+    modified_at: Date;
+    @VersionColumn()
+    revision: number;
 
 
 

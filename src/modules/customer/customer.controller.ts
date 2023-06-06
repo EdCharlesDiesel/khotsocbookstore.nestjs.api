@@ -42,8 +42,9 @@ export class CustomerController {
 
   @Get()
   public async getCustomers(@Res() res) {
-    const customers = await this.customerService.findAll();
-    return res.status(HttpStatus.OK).json(customers);
+    return await this.customerService.findAll();
+    // const customers = await this.customerService.findAll();
+    // return res.status(HttpStatus.OK).json(customers);
   }
 
   @Get(":id")

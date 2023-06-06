@@ -1,4 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+    VersionColumn
+} from "typeorm";
 import { Order } from "../order/order.entity";
 import { Payment } from "../payment/payment.entity";
 import { Cart } from "../cart/cart.entity";
@@ -28,7 +36,6 @@ export class Customer {
     @OneToMany(() => Order, (order) => order.order_id )
     orders: Order[]
 
-
     @OneToMany(() => Payment, (payment) => payment.payment_id )
     payments: Payment[]
 
@@ -37,7 +44,12 @@ export class Customer {
 
     @OneToMany(() => Wishlist, (wishlist) => wishlist.wishlist_id )
     wishlists: Wishlist[]
-
+    @CreateDateColumn()
+    created_at: Date;
+    @UpdateDateColumn()
+    modified_at: Date;
+    @VersionColumn()
+    revision: number;
 
 
 }

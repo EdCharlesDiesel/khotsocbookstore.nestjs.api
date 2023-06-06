@@ -41,8 +41,8 @@ export class PaymentController {
 
   @Get()
   public async getPayments(@Res() res) {
-    const payments = await this.paymentService.findAll();
-    return res.status(HttpStatus.OK).json(payments);
+    return  await this.paymentService.findAll();
+  //  return res.status(HttpStatus.OK).json(payments);
   }
 
   @Get(":id")

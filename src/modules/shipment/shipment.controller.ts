@@ -24,7 +24,7 @@ export class ShipmentController {
   }
 
   @Post()
-  public async create(@User() user: IUser, @Body() body: CreateShipmentDto, @Res() res) {
+  public async create( @Body() body: CreateShipmentDto, @Res() res) {
     if (!body || (body && Object.keys(body).length === 0))
       return res
         .status(HttpStatus.BAD_REQUEST)
@@ -41,8 +41,8 @@ export class ShipmentController {
 
   @Get()
   public async getShipments(@Res() res) {
-    const shipments = await this.shipmentService.findAll();
-    return res.status(HttpStatus.OK).json(shipments);
+    return  await this.shipmentService.findAll();
+  //  return res.status(HttpStatus.OK).json(shipments);
   }
 
   @Get(":id")

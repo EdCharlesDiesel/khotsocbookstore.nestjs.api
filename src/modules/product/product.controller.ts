@@ -42,8 +42,8 @@ export class ProductController {
 
   @Get()
   public async getProducts(@Res() res) {
-    const books = await this.productService.findAll();
-    return res.status(HttpStatus.OK).json(books);
+return  this.productService.findAll();
+  //  return res.status(HttpStatus.OK).json(books);
   }
 
   @Get(":id")

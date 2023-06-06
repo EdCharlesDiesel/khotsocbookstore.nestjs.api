@@ -1,138 +1,123 @@
-// import { Test, TestingModule } from "@nestjs/testing";
-// import { WishlistController } from "../../wishlist.controller";
-// import { WishlistService } from "../../wishlist.service";
-// import { CreateWishlistDto } from "../../dto/create-wishlist.dto";
-// import { IUser } from "src/modules/user/interfaces/IUser";
-// import {v4 as uuidv4} from 'uuid';
-// describe('BooksController', () => {
-//     let booksController: WishlistController;
-//     let booksService: WishlistService;
-//     let request_: any;
-//     let user: IUser = {
-//         id: '1',
-//         firstName: '',
-//         lastName: 'Mokhethi',
-//         email: 'Mokhetkc@hotmail.com',
-//         birthday: new Date().getDate,
-//         idNumber: '515135135155',
-//         password: 'password',
-//         role: 'Admin',
-//         subscription: 'Full Access',
-//         username: 'EdCharles'
-//     }
-//
-//     let createBook: CreateWishlistDto = {
-//         userId: user.firstName,
-//         cost: 300,
-//         coverFileName: 'pic.jpeg',
-//         publishedDate: new Date(),
-//         retailPrice: 100,
-//         title: "TypeScript"
-//     }
-//
-//     beforeEach(async () => {
-//         const app: TestingModule = await Test.createTestingModule({
-//             controllers: [WishlistController],
-//             providers: [ //  <---------- THIS IS THE MOST IMPORTANT SECTION TO SOLVE THIS ISSUE.
-//                 {
-//                     provide: WishlistService,
-//                     useValue: {
-//                         create: jest
-//                             .fn()
-//                             .mockImplementation((book: CreateWishlistDto) =>
-//                                 Promise.resolve({ id: '1', ...book }),
-//                             ),
-//                         findAll: jest.fn().mockResolvedValue([
-//                             {
-//                                 firstName: 'firstName #1',
-//                                 lastName: 'lastName #1',
-//                                 bookBooked: 'lastName #1'
-//                             },
-//                             {
-//                                 firstName: 'firstName #2',
-//                                 lastName: 'lastName #2',
-//                                 bookBooked: 'lastName #1'
-//                             },
-//                         ]),
-//                         findOne: jest.fn().mockImplementation((id: string) =>
-//                             Promise.resolve({
-//                                 firstName: 'firstName #1',
-//                                 lastName: 'lastName #1',
-//                                 bookBooked: 'lastName #1',
-//                                 id,
-//                             }),
-//                         ),
-//                         remove: jest.fn(),
-//                     },
-//                 },
-//             ],
-//         }).compile();
-//
-//         booksController = app.get<WishlistController>(WishlistController);
-//         booksService = app.get<WishlistService>(WishlistService);
-//     });
-//
-//     it('should be defined', () => {
-//         expect(booksController).toBeDefined();
-//     });
-//
-//     describe('create()', () => {
-//         let myuuid = uuidv4();
-//         let user: IUser = {
-//             id: myuuid,
-//             firstName: '',
-//             lastName: 'Mokhethi',
-//             email: 'Mokhetkc@hotmail.com',
-//             birthday: new Date().getDate,
-//             idNumber: '515135135155',
-//             password: 'password',
-//             role: 'Admin',
-//             subscription: 'Full Access',
-//             username: 'EdCharles'
-//         }
-//
-//         let createBook: any = {
-//             userId: user.firstName,
-//             cost: 300,
-//             coverFileName: 'pic.jpeg',
-//             publishedDate: new Date(),
-//             retailPrice: 100,
-//             title: "TypeScript"
-//         }
-//         it('should create a book', () => {
-//             expect(booksController.create(user, createBook, request_)).resolves.toEqual({
-// id: myuuid,
-//                 ...createBook,
-//             });
-//             expect(booksService.create).toHaveBeenCalled();
-//             expect(booksService.create).toHaveBeenCalledWith(createBook);
-//         });
-//     });
-//
-//     describe('findAll()', () => {
-//         it('should find all books ', () => {
-//             booksController.getBooks(request_);
-//             expect(booksService.findAll).toHaveBeenCalled();
-//         });
-//     });
-//
-//     // describe('findOne()', () => {
-//     //   it('should find a book', () => {
-//     //     booksController.getBookById('1');
-//     //     expect(booksService.findById('1')).toHaveBeenCalled();
-//     //     expect(booksController.getBookById('1')).resolves.toEqual({
-//     //       bookBooked: 'lastName #1',
-//     //       firstName: 'firstName #1',
-//     //       lastName: 'lastName #1',
-//     //       id: '1',
-//     //     });
-//     //   });
-//     // });
-//     //
-//     // describe('remove()', () => {
-//     //   it('should remove the book', () => {
-//     //     booksController.delete('2');
-//     //     expect(booksService.delete('2')).toHaveBeenCalled();
-//     //   });
-//     // });
-// });
+import { Test, TestingModule } from "@nestjs/testing";
+import { UserController } from "../../user.controller";
+import { UserService } from "../../user.service";
+import { CreateUserDto } from "../../dto/create-user.dto";
+import { IUser } from "src/modules/user/interfaces/IUser";
+import { v4 as uuidv4 } from "uuid";
+
+
+describe("UserController", () => {
+  let usersController: UserController;
+  let usersService: UserService;
+  let request_: any;
+  let myuuid = uuidv4();
+
+  beforeEach(async () => {
+    const app: TestingModule = await Test.createTestingModule({
+      controllers: [UserController],
+      providers: [
+        {
+          provide: UserService,
+          useValue: {
+            create: jest
+              .fn()
+              .mockImplementation((user: CreateUserDto) =>
+                Promise.resolve({ id: myuuid , ...user })
+              ),
+            findAll: jest.fn().mockResolvedValue([
+              {
+                user_id: "",
+                SKU: "",
+                price: 362,
+                stock: 22,
+                name: "gbbvbbvb"
+              },
+              {
+                user_id: "",
+                SKU: "",
+                price: 362,
+                stock: 22,
+                name: "gbbvbbvb"
+              },
+              {
+                user_id: "",
+                SKU: "",
+                price: 362,
+                stock: 22,
+                name: "gbbvbbvb"
+              }
+            ]),
+            findOne: jest.fn().mockImplementation((id: string) =>
+              Promise.resolve({
+                user_id: "",
+                SKU: "",
+                price: 362,
+                stock: 22,
+                name: "gbbvbbvb"
+              })
+            ),
+            remove: jest.fn()
+          }
+        }
+      ]
+    }).compile();
+
+    usersController = app.get<UserController>(UserController);
+    usersService = app.get<UserService>(UserService);
+  });
+
+  it("should be defined", () => {
+    expect(usersController).toBeDefined();
+  });
+
+  describe("create()", () => {
+
+
+    let createUser: CreateUserDto = {
+     firstName:'',
+      birthday: new Date(),
+      email: 'email@gmail.com',
+      lastName: '',
+      password:'',
+      role: '',
+      idNumber:'',
+      subscription:'',
+      username:''
+    };
+    it.skip("should create a user", () => {
+      expect(usersController.create(createUser,request_)).resolves.toEqual({
+        id: myuuid,
+        ...createUser
+      });
+      expect(usersService.create).toHaveBeenCalled();
+      expect(usersService.create).toHaveBeenCalledWith(createUser);
+    });
+  });
+
+  describe("findAll()", () => {
+    it("should find all users ", () => {
+      usersController.getUsers(request_);
+      expect(usersService.findAll).toHaveBeenCalled();
+    });
+  });
+
+  // describe('findOne()', () => {
+  //   it('should find a user', () => {
+  //     usersController.getUserById('1');
+  //     expect(usersService.findById('1')).toHaveBeenCalled();
+  //     expect(usersController.getUserById('1')).resolves.toEqual({
+  //       userUsered: 'lastName #1',
+  //       firstName: 'firstName #1',
+  //       lastName: 'lastName #1',
+  //       id: '1',
+  //     });
+  //   });
+  // });
+  //
+  // describe('remove()', () => {
+  //   it('should remove the user', () => {
+  //     usersController.delete('2');
+  //     expect(usersService.delete('2')).toHaveBeenCalled();
+  //   });
+  // });
+});

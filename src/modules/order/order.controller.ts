@@ -41,8 +41,9 @@ export class OrderController {
 
   @Get()
   public async getOrders(@Res() res) {
-    const orders = await this.orderService.findAll();
-    return res.status(HttpStatus.OK).json(orders);
+    return await this.orderService.findAll();
+    // const orders = await this.orderService.findAll();
+    // return res.status(HttpStatus.OK).json(orders);
   }
 
   @Get(":id")

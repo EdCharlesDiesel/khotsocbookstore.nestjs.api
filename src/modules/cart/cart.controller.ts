@@ -48,8 +48,8 @@ export class CartController {
 
   @Get()
   public async getAllCarts( @Res() res) {
-    const carts = await this.cartService.findAll();
-    return res.status(HttpStatus.OK).json(carts);
+return  await this.cartService.findAll();
+  //  return res.status(HttpStatus.OK).json(carts);
   }
 
   @Get(':id')

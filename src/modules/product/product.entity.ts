@@ -1,4 +1,12 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn, VersionColumn
+} from "typeorm";
 import { Order } from "../order/order.entity";
 import { Cart } from "../cart/cart.entity";
 import { Wishlist } from "../wishList/wishlist.entity";
@@ -29,8 +37,14 @@ export class Product {
 
     @OneToMany(() => Cart, (cart) => cart.cart_id )
     carts: Cart[]
+    @CreateDateColumn()
+    created_at: Date;
+    @UpdateDateColumn()
+    modified_at: Date;
+    @VersionColumn()
+    revision: number;
 
-    @OneToMany(() => Order, (order) => order.Shipment_shipment_id )
+    @OneToMany(() => Order, (order) => order.order_id )
     orders: Order[]
 
     @OneToMany(() => Wishlist, (wishlist) => wishlist.Product_product_id )

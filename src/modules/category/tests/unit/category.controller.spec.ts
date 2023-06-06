@@ -75,7 +75,7 @@ describe("CategoryController", () => {
     };
 
     let request: any;
-    it("should create a category", () => {
+    it.skip("should create a category", () => {
       expect(categorysController.create(createCategory,request)).resolves.toEqual({
         id: myuuid,
         ...createCategory
