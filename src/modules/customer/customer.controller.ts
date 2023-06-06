@@ -25,7 +25,7 @@ export class CustomerController {
   }
 
   @Post()
-  public async create(@User() user: IUser, @Body() body: CreateCustomerDto, @Res() res) {
+  public async create( @Body() body: CreateCustomerDto, @Res() res) {
     if (!body || (body && Object.keys(body).length === 0))
       return res
         .status(HttpStatus.BAD_REQUEST)
@@ -42,8 +42,9 @@ export class CustomerController {
 
   @Get()
   public async getCustomers(@Res() res) {
-    const customers = await this.customerService.findAll();
-    return res.status(HttpStatus.OK).json(customers);
+    return await this.customerService.findAll();
+    // const customers = await this.customerService.findAll();
+    // return res.status(HttpStatus.OK).json(customers);
   }
 
   @Get(":id")

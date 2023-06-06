@@ -1,4 +1,12 @@
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+    BeforeInsert,
+    Column,
+    CreateDateColumn,
+    Entity,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+    VersionColumn
+} from "typeorm";
 
 
 @Entity('User')
@@ -47,6 +55,13 @@ export class User  {
     //TODO we need to make this a subscription.
     @Column("varchar", { length: 200 },)
     public subscription: string;
+
+    @CreateDateColumn()
+    created_at: Date;
+    @UpdateDateColumn()
+    modified_at: Date;
+    @VersionColumn()
+    revision: number;
 }
 
 

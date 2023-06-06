@@ -1,7 +1,16 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn, VersionColumn
+} from "typeorm";
 import { Shipment } from "../shipment/shipment.entity";
 import { OrderItem } from "../order-Item/order-item.entity";
 import { Payment } from "../payment/payment.entity";
+import { Customer } from "../customer/customer.entity";
 
 
 @Entity("Order")
@@ -15,16 +24,24 @@ export class Order {
   @Column({ type: "int", width: 200 })
   public total_price: number;
 
+  @ManyToOne(() => Customer, (customer) => customer.orders)
+  order: Order;
+
   @ManyToOne(() => Shipment, (shipment) => shipment.orders)
-  Shipment_shipment_id: Shipment;
+  shipment: Shipment;
 
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order_item_id)
   orderItems: OrderItem[];
 
-  @ManyToOne(() => Order, (order) => order.Customer_customer_id)
-  Customer_customer_id: Order;
+
 
   @ManyToOne(() => Payment, (payment) => payment.Payment_payment_id)
   Payment_payment_id: Payment;
+  @CreateDateColumn()
+  created_at: Date;
+  @UpdateDateColumn()
+  modified_at: Date;
+  @VersionColumn()
+  revision: number;
 
 }

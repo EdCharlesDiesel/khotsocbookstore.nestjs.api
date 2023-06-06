@@ -1,4 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+    VersionColumn
+} from "typeorm";
 import { Product } from "../product/product.entity";
 import { Customer } from "../customer/customer.entity";
 
@@ -15,5 +23,11 @@ export class Cart {
 
     @ManyToOne(() => Customer, (customer) => customer.customer_id)
     Customer_customer_id: Customer;
+    @CreateDateColumn()
+    created_at: Date;
+    @UpdateDateColumn()
+    modified_at: Date;
+    @VersionColumn()
+    revision: number;
 
 }

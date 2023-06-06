@@ -1,4 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+    VersionColumn
+} from "typeorm";
 import { Order } from "../order/order.entity";
 
 @Entity('Shipment')
@@ -24,7 +32,13 @@ export class Shipment {
     @Column("varchar", { length: 200 })
     public postal_code: string;
 
-    @OneToMany(() => Order, (order) => order.Shipment_shipment_id )
+    @OneToMany(() => Order, (order) => order.order_id )
     orders: Order[]
+    @CreateDateColumn()
+    created_at: Date;
+    @UpdateDateColumn()
+    modified_at: Date;
+    @VersionColumn()
+    revision: number;
 
 }

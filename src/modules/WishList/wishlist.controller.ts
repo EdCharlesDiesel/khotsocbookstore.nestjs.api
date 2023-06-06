@@ -5,7 +5,7 @@ import {
   Get,
   HttpStatus,
   Param,
-  Post, Put, Res
+  Post,  Res
 } from "@nestjs/common";
 
 import { WishlistService } from "./wishlist.service";
@@ -23,7 +23,7 @@ export class WishlistController {
   }
 
   @Post()
-  public async create(@User() user: IUser, @Body() body: CreateWishlistDto, @Res() res) {
+  public async create( @Body() body: CreateWishlistDto, @Res() res) {
     if (!body || (body && Object.keys(body).length === 0))
       return res
         .status(HttpStatus.BAD_REQUEST)
@@ -40,8 +40,8 @@ export class WishlistController {
 
   @Get()
   public async getWishlists(@Res() res) {
-    const wishlists = await this.wishlistService.findAll();
-    return res.status(HttpStatus.OK).json(wishlists);
+   return  await this.wishlistService.findAll();
+ //   return res.status(HttpStatus.OK).json(wishlists);
   }
 
   @Get(":id")
