@@ -8,10 +8,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateCustomerDto {
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  customer_id: string;
+
 
   @IsString()
   @IsNotEmpty()

@@ -24,18 +24,18 @@ export class WishlistController {
 
   @Post()
   public async create( @Body() body: CreateWishlistDto, @Res() res) {
-    if (!body || (body && Object.keys(body).length === 0))
-      return res
-        .status(HttpStatus.BAD_REQUEST)
-        .send("Missing some information.");
+    // if (!body || (body && Object.keys(body).length === 0))
+    //   return res
+    //     .status(HttpStatus.BAD_REQUEST)
+    //     .send("Missing some information.");
 
-    const wishlist = await this.wishlistService.create(body);
+    return  await this.wishlistService.create(body);
 
-    if (wishlist) {
-      return res.status(HttpStatus.CREATED).send();
-    } else {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
-    }
+    // if (wishlist) {
+    //   return res.status(HttpStatus.CREATED).send();
+    // } else {
+    //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+    // }
   }
 
   @Get()

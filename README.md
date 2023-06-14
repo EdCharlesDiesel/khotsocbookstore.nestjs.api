@@ -58,15 +58,23 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## ERD
+
+- A customer can place several orders. Therefore, between Customer and Order there must be a one-to-many relationship.
+- An order can contain one or several items, each of which represents a single product. Order_Item is a dependent entity of Order, since it has no reason to exist if an order does not exist. In addition, Order_Item is related to Product through a one-to-many relationship: each Order_Item is related to one Product, and a Product can be related to multiple Order_item
+- An order is associated with one payment and one shipment, but each payment and each shipment can include multiple orders. For this reason, there are one-to-many relationships between Payment and Order and between Shipment and Order.
+- A product can belong to a single category: there is a one-to-many relationship between Product and Category.
+- The shopping cart and the wish list are dependent entities of Customer, so both Cart and Wishlist maintain a dependency relationship with Customer. In turn, each instance of Cart and of Wishlist is related to a product, so both entities have many-to-one relationships with Product.
 ## Support
+-An order is associated with one payment and one shipment, but each payment and each shipment can include multiple orders. For this reason, there are one-to-many relationships between Payment and Order and between Shipment and Order.
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Author - [Khotso Mokhethi](https://kamilmysliwiec.com)
 - Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Twitter - [@EdCharles](https://twitter.com/nestframework)
 
 ## License
 

@@ -26,19 +26,19 @@ export class CustomerController {
 
   @Post()
   public async create( @Body() body: CreateCustomerDto, @Res() res) {
-    if (!body || (body && Object.keys(body).length === 0))
-      return res
-        .status(HttpStatus.BAD_REQUEST)
-        .send("Missing some information.");
+    // if (!body || (body && Object.keys(body).length === 0))
+    //   return res
+    //     .status(HttpStatus.BAD_REQUEST)
+    //     .send("Missing some information.");
 
-    const customer = await this.customerService.create(body);
+    return await this.customerService.create(body);
 
-    if (customer) {
-      return res.status(HttpStatus.CREATED).send();
-    } else {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
-    }
-  }
+  //   if (customer) {
+  //     return res.status(HttpStatus.CREATED).send();
+  //   } else {
+  //     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+  //   }
+   }
 
   @Get()
   public async getCustomers(@Res() res) {

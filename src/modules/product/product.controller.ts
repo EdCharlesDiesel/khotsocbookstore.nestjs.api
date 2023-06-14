@@ -26,18 +26,18 @@ export class ProductController {
   @Post()
   @HttpCode(201)
     public async create( @Body() body: CreateProductDto,@Res() response) {
-    if (!body || (body && Object.keys(body).length === 0))
-    {
-        response.status(HttpStatus.BAD_REQUEST)
-         .send("Missing some information.");
-    }else {
-      const product = await this.productService.create(body);
-      if (product) {
-        return response.status(HttpStatus.CREATED).send();
-      } else {
-        return response.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
-      }
-    }
+    // if (!body || (body && Object.keys(body).length === 0))
+    // {
+    //     response.status(HttpStatus.BAD_REQUEST)
+    //      .send("Missing some information.");
+    // }else {
+      return await this.productService.create(body);
+      // if (product) {
+      //   return response.status(HttpStatus.CREATED).send();
+      // } else {
+      //   return response.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+      // }
+    
   }
 
   @Get()
@@ -72,7 +72,7 @@ return  this.productService.findAll();
   }
 
   @Delete(":id")
-  public async delete(@User() user: IUser, @Param("id") id: string, @Res() res) {
+  public async delete(@Param("id") id: string, @Res() res) {
     // if (user.id !== book.userId)
     //   return res
     //     .status(HttpStatus.NOT_FOUND)

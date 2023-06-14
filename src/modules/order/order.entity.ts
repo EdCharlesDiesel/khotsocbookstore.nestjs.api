@@ -33,8 +33,6 @@ export class Order {
   @OneToMany(() => OrderItem, (orderItem) => orderItem.order_item_id)
   orderItems: OrderItem[];
 
-
-
   @ManyToOne(() => Payment, (payment) => payment.Payment_payment_id)
   Payment_payment_id: Payment;
   @CreateDateColumn()

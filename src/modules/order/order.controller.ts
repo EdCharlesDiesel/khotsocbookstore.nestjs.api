@@ -25,18 +25,18 @@ export class OrderController {
 
   @Post()
   public async create( @Body() body: CreateOrderDto, @Res() res) {
-    if (!body || (body && Object.keys(body).length === 0))
-      return res
-        .status(HttpStatus.BAD_REQUEST)
-        .send("Missing some information.");
+    // if (!body || (body && Object.keys(body).length === 0))
+    //   return res
+    //     .status(HttpStatus.BAD_REQUEST)
+    //     .send("Missing some information.");
 
-    const order = await this.orderService.create(body);
+    return await this.orderService.create(body);
 
-    if (order) {
-      return res.status(HttpStatus.CREATED).send();
-    } else {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
-    }
+    // if (order) {
+    //   return res.status(HttpStatus.CREATED).send();
+    // } else {
+    //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+    // }
   }
 
   @Get()

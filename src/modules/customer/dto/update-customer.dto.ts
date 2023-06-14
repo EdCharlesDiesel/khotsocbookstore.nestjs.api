@@ -6,6 +6,11 @@ import {
 import { ApiProperty } from "@nestjs/swagger";
 
 export class UpdateCustomerDto {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  customer_id: string;
+  
    @IsString()
   @IsNotEmpty()
   @ApiProperty()

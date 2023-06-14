@@ -25,18 +25,18 @@ export class CategoryController {
 
   @Post()
   public async create(@Body() body: CreateCategoryDto, @Res() res) {
-    if (!body || (body && Object.keys(body).length === 0))
-      return res
-        .status(HttpStatus.BAD_REQUEST)
-        .send("Missing some information.");
+    // if (!body || (body && Object.keys(body).length === 0))
+    //   return res
+    //     .status(HttpStatus.BAD_REQUEST)
+    //     .send("Missing some information.");
 
-    const category = await this.categoryService.create(body);
+    return await this.categoryService.create(body);
 
-    if (category) {
-      return res.status(HttpStatus.CREATED).send();
-    } else {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
-    }
+    // if (category) {
+    //   return res.status(HttpStatus.CREATED).send();
+    // } else {
+    //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+    // }
   }
 
   @Get()

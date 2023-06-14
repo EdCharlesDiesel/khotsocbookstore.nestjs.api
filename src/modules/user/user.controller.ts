@@ -21,18 +21,18 @@ export class UserController {
 
     @Post()
     public async create(@Body() body: CreateUserDto, @Res() res) {
-        if (!body || (body && Object.keys(body).length === 0))
-            return res
-                .status(HttpStatus.BAD_REQUEST)
-                .send("Missing some information.");
+        // if (!body || (body && Object.keys(body).length === 0))
+        //     return res
+        //         .status(HttpStatus.BAD_REQUEST)
+        //         .send("Missing some information.");
 
-        const user = await this.userService.create(body);
+       return await this.userService.create(body);
 
-        if (user) {
-            return res.status(HttpStatus.CREATED).send();
-        } else {
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
-        }
+        // if (user) {
+        //     return res.status(HttpStatus.CREATED).send();
+        // } else {
+        //     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+        // }
     }
 
     @Get()
