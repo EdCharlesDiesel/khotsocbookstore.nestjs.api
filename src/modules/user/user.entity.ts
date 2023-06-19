@@ -29,6 +29,11 @@ export class User  {
         type: 'varchar',
         nullable: false
     })
+    @Column({
+        type: 'varchar',
+        nullable: true
+    })
+    public emailAddress: string;
 
     @Column("varchar", { length: 200 },)
     public firstName: string;

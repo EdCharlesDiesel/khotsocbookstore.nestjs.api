@@ -87,8 +87,8 @@ export class UserService implements IUserService {
     return new User;
   }
 
-  public async findByLogin({ username, password }: LoginUserDto): Promise<IUser> {
-    const user = await this.userRepository.findOne({ where: { username } });
+  public async findByLogin({ emailAddress, password }: LoginUserDto): Promise<IUser> {
+    const user = await this.userRepository.findOne({ where: { emailAddress  : emailAddress } });
 
     if (!user) {
       throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);

@@ -9,6 +9,7 @@ import { ICustomerService } from "./interfaces/ICustomerService";
 import { CreateCustomerDto } from "./dto/create-customer.dto";
 import { UpdateCustomerDto } from "./dto/update-customer.dto";
 import { Customer } from "./customer.entity";
+import { ICustomer } from "./interfaces/ICustomer";
 
 @Injectable()
 export class CustomerService implements ICustomerService {
@@ -29,7 +30,7 @@ export class CustomerService implements ICustomerService {
     throw new HttpException('Customer not found', HttpStatus.NOT_FOUND);
   }
 
-  public async create(customer: CreateCustomerDto): Promise<Customer> {
+  public async create(customer: CreateCustomerDto): Promise<Customer| null> {
     const customerToAdd = await this.customerRepository.create(customer);
     await this.customerRepository.save(customerToAdd);
 

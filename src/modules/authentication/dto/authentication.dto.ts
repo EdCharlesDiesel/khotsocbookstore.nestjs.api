@@ -7,7 +7,7 @@ import {
 export class AuthenticationDto {
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  emailAddress: string;
 
   @IsString()
   @IsNotEmpty()

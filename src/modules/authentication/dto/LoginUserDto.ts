@@ -4,7 +4,7 @@ import { ApiModelProperty } from "@nestjs/swagger/dist/decorators/api-model-prop
 export class LoginUserDto {
   @IsNotEmpty()
   @ApiModelProperty()
-  readonly username: string;
+  readonly emailAddress: string;
 
   @IsNotEmpty()
   @ApiModelProperty()
