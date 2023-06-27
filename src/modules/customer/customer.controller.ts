@@ -5,7 +5,7 @@ import {
   Get,
   HttpStatus,
   Param,
-  Post, Put, Res
+  Post, Put, Res, UploadedFile, UseInterceptors
 } from "@nestjs/common";
 
 import { CustomerService } from "./customer.service";
@@ -13,8 +13,10 @@ import { CreateCustomerDto } from "./dto/create-customer.dto";
 import { ICustomer } from "./interfaces/ICustomer";
 import { UpdateCustomerDto } from "./dto/update-customer.dto";
 import { User } from "../../shared/decorator/user.decorator";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
 import { IUser } from "../user/interfaces/IUser";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { FileExtender } from "src/shared/decorator/FileInterceptor";
 
 
 @ApiTags("Customer")
@@ -25,7 +27,7 @@ export class CustomerController {
   }
 
   @Post()
-  public async create( @Body() body: CreateCustomerDto) {
+  public async create(@Body() body: CreateCustomerDto) {
     // if (!body || (body && Object.keys(body).length === 0))
     //   return res
     //     .status(HttpStatus.BAD_REQUEST)
@@ -33,12 +35,12 @@ export class CustomerController {
 
     return await this.customerService.create(body);
 
-  //   if (customer) {
-  //     return res.status(HttpStatus.CREATED).send();
-  //   } else {
-  //     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
-  //   }
-   }
+    //   if (customer) {
+    //     return res.status(HttpStatus.CREATED).send();
+    //   } else {
+    //     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
+    //   }
+  }
 
   @Get()
   public async getCustomers() {
@@ -62,7 +64,7 @@ export class CustomerController {
     //     .status(HttpStatus.NOT_FOUND)
     //     .send("Unable to find the entry.");
     await this.customerService.update(customer_id, body);
-   
+
     // return res.status(HttpStatus.NO_CONTENT).send();
 
     // if (updatedCustomer) {
@@ -86,5 +88,36 @@ export class CustomerController {
     // } else {
     //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
     // }
+  }
+
+  @Post('upload')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        comment: { type: 'string' },
+        outletId: { type: 'integer' },
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @UseInterceptors(FileExtender)
+  @UseInterceptors(FileInterceptor('file'))
+
+  
+  public async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    const imageUrl = await this.customerService.uploadImage(file)
+    // console.log(body, imageUrl)
+    // return await this.service.punchInAttendance({
+    //   comment: body.punchInComment,
+    //   outletId: body.outletId,
+    //   imgUrl: imageUrl,
+    // })
+
+    return;
   }
 }

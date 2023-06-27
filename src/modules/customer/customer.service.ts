@@ -13,6 +13,9 @@ import { ICustomer } from "./interfaces/ICustomer";
 
 @Injectable()
 export class CustomerService implements ICustomerService {
+  uploadImage(file: Express.Multer.File) {
+    throw new Error("Method not implemented.");
+  }
   constructor(@InjectRepository(Customer) private readonly customerRepository: Repository<Customer>) {
   }
 
