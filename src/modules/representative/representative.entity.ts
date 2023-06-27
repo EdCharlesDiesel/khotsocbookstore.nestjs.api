@@ -1,18 +1,23 @@
 import {
     Column,
-    Entity,
-    PrimaryGeneratedColumn,
+    Entity, OneToOne,
+    PrimaryGeneratedColumn
 } from "typeorm";
+import { Customer } from "../customer/customer.entity";
 
 
-@Entity('Country')
-export class Country {
+@Entity('Representative')
+export class Representative {
     @PrimaryGeneratedColumn("uuid")
-    public country_id: string;
+    public representative_id: string;
 
     @Column("varchar", { length: 200 },)
     public name?: string;
 
-    @Column("varchar", { length: 200 },)
-    public code?: string;
+    @Column("varchar")
+    public image?: string;
+
+    @OneToOne(() => Customer, (representative) => representative.representative) // specify inverse side as a second parameter
+    customer: Customer;
+    
 }

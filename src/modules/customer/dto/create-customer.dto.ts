@@ -1,14 +1,15 @@
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty, IsNumber,
   IsString
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
+import { Representative } from "src/modules/representative/representative.entity";
+import { Country } from "src/modules/country/country.entity";
 
 
 export class CreateCustomerDto {
-
-
 
   @IsString()
   @IsNotEmpty()
@@ -24,12 +25,8 @@ export class CreateCustomerDto {
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty()
-  email: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  password: string;
+  emailAddress: string;
+  
 
   @IsString()
   @IsNotEmpty()
@@ -40,4 +37,41 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   @ApiProperty()
   phone_number: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  company?: string;
+
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  date?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  status?: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  activity?: number;
+  
+  @IsBoolean()
+  @IsNotEmpty()
+  @ApiProperty()
+  verified?: boolean;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  balance?: number;
+
+  @ApiProperty({type: Representative})  
+  representative?: Representative;
+
+  @ApiProperty({type: Country})
+  country?: Country;
 }

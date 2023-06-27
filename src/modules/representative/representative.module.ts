@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { CountryController } from './country.controller';
-import { CountryService } from './country.service';
+import { RepresentativeController } from './representative.controller';
+import { RepresentativeService } from './representative.service';
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Country } from "./country.entity";
+import { Representative } from "./representative.entity";
 
 
 @Module({
-  imports: [ TypeOrmModule.forFeature([Country])],
-  controllers: [CountryController],
-  providers: [CountryService],
-  exports: [CountryService],
+  imports: [ TypeOrmModule.forFeature([Representative])],
+  controllers: [RepresentativeController],
+  providers: [RepresentativeService],
+  exports: [RepresentativeService],
 })
-export class CountryModule {}
+export class RepresentativeModule {}

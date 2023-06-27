@@ -1,13 +1,13 @@
-import { CreateCountryDto } from "../dto/create-country.dto";
-import { UpdateCountryDto } from "../dto/update-country.dto";
-import { Country } from "../country.entity";
+import { CreateRepresentativeDto } from "../dto/create-representative.dto";
+import { UpdateRepresentativeDto } from "../dto/update-representative.dto";
+import { Representative } from "../representative.entity";
 
 
 
-export interface ICountryService {
-    findAll(): Promise<Array<Country>>;
-    findById(id: string): Promise<Country | null>;
-    create(book: CreateCountryDto): Promise<Country>;
-    update(id: string, newCountry: UpdateCountryDto): Promise<Country | null>;
+export interface IRepresentativeService {
+    findAll(): Promise<Array<Representative>>;
+    findById(id: string): Promise<Representative | null>;
+    create(book: CreateRepresentativeDto): Promise<Representative>;
+    update(id: string, newRepresentative: UpdateRepresentativeDto): Promise<Representative | null>;
     delete(id: string): Promise<void>;
 }

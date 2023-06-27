@@ -8,58 +8,59 @@ import {
   Post, Put, Res
 } from "@nestjs/common";
 
-import { RepresentativeService } from "./representative.service";
-import { CreateRepresentativeDto } from "./dto/create-representative.dto";
-import { UpdateRepresentativeDto } from "./dto/update-representative.dto";
+import { CountryService } from "./country.service";
+import { CreateCountryDto } from "./dto/create-country.dto";
+import { UpdateCountryDto } from "./dto/update-country.dto";
 import { User } from "../../shared/decorator/user.decorator";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { IUser } from "../user/interfaces/IUser";
 
 
-@ApiTags("Representative")
-@Controller("Representative")
+@ApiTags("Country")
+@Controller("Country")
 //@ApiBearerAuth('defaultBearerAuth')
-export class RepresentativeController {
-  constructor(private representativeService: RepresentativeService) {
+export class CountryController {
+  constructor(private countryService: CountryService) {
   }
 
   @Post()
-  public async create(@Body() body: CreateRepresentativeDto, @Res() res) {
+  public async create(@Body() body: CreateCountryDto) {
     // if (!body || (body && Object.keys(body).length === 0))
     //   return res
     //     .status(HttpStatus.BAD_REQUEST)
     //     .send("Missing some information.");
 
-    return await this.representativeService.create(body);
+    return await this.countryService.create(body);
 
-    // if (representative) {
+    // if (country) {
     //   return res.status(HttpStatus.CREATED).send();
     // } else {
     //   return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send();
     // }
   }
 
+
   @Get()
   public async getCountries(@Res() res) {
- return  await this.representativeService.findAll();
-  //  return res.status(HttpStatus.OK).json(representatives);
+ return  await this.countryService.findAll();
+  //  return res.status(HttpStatus.OK).json(countrys);
   }
 
   @Get(":id")
   public async getCountry(@Param("id") id: string, @Res() res) {
-    const representatives = await this.representativeService.findById(id);
+    const countrys = await this.countryService.findById(id);
 
-    return res.status(HttpStatus.OK).json(representatives);
+    return res.status(HttpStatus.OK).json(countrys);
   }
 
   @Put(":id")
-  public async update(@Param("id") id: string, @User() user: IUser, @Body() body: UpdateRepresentativeDto, @Res() res) {
+  public async update(@Param("id") id: string, @User() user: IUser, @Body() body: UpdateCountryDto, @Res() res) {
     // console.log('id',id);
-    // if (user.id !== representative.userId)
+    // if (user.id !== country.userId)
     //   return res
     //     .status(HttpStatus.NOT_FOUND)
     //     .send("Unable to find the entry.");
-    await this.representativeService.update(id, body);
+    await this.countryService.update(id, body);
    
     return res.status(HttpStatus.NO_CONTENT).send();
 
@@ -72,12 +73,12 @@ export class RepresentativeController {
 
   @Delete(":id")
   public async delete(@User() user: IUser, @Param("id") id: string, @Res() res) {
-    // if (user.id !== representative.userId)
+    // if (user.id !== country.userId)
     //   return res
     //     .status(HttpStatus.NOT_FOUND)
     //     .send("Unable to find the entry.");
 
-    await this.representativeService.delete(id);
+    await this.countryService.delete(id);
     return res.status(HttpStatus.NO_CONTENT).send();
     //TODO need to fix this.
     // if (deletedCountry) {

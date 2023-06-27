@@ -4,7 +4,7 @@ import {
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateRepresentativeDto {
+export class CreateCountryDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
@@ -13,6 +13,6 @@ export class CreateRepresentativeDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  image?: string;
+  code?: string;
 
 }

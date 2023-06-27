@@ -5,49 +5,49 @@ import {
 
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { ICountryService } from "./interfaces/ICountryService";
-import { CreateCountryDto } from "./dto/create-country.dto";
-import { UpdateCountryDto } from "./dto/update-country.dto";
-import { Country } from "./country.entity";
+import { IRepresentativeService } from "./interfaces/IRepresentativeService";
+import { CreateRepresentativeDto } from "./dto/create-representative.dto";
+import { UpdateRepresentativeDto } from "./dto/update-representative.dto";
+import { Representative } from "./representative.entity";
 
 @Injectable()
-export class CountryService implements ICountryService {
-  constructor(@InjectRepository(Country) private readonly countryRepository: Repository<Country>) {
+export class RepresentativeService implements IRepresentativeService {
+  constructor(@InjectRepository(Representative) private readonly representativeRepository: Repository<Representative>) {
   }
 
-  findAll(): Promise<Country[]> {
-    return this.countryRepository.find();
+  findAll(): Promise<Representative[]> {
+    return this.representativeRepository.find();
   }
 
-  public async findById(id: string): Promise<Country> {
+  public async findById(id: string): Promise<Representative> {
 
-    const country = await this.countryRepository.findOneBy({ country_id: id });
-    if (country) {
-      return country;
+    const representative = await this.representativeRepository.findOneBy({ representative_id: id });
+    if (representative) {
+      return representative;
     }
 
-    throw new HttpException('Country not found', HttpStatus.NOT_FOUND);
+    throw new HttpException('Representative not found', HttpStatus.NOT_FOUND);
   }
 
-  public async create(country: CreateCountryDto): Promise<Country> {
-    const countryToAdd = await this.countryRepository.create(country);
-    await this.countryRepository.save(countryToAdd);
+  public async create(representative: CreateRepresentativeDto): Promise<Representative> {
+    const representativeToAdd = await this.representativeRepository.create(representative);
+    await this.representativeRepository.save(representativeToAdd);
 
-    return countryToAdd;
+    return representativeToAdd;
   }
 
-  public async update(id: string, newCountry: UpdateCountryDto): Promise<Country> {
-    const country = await this.countryRepository.findBy({ country_id: id});
-    if (!country) {
-      throw new Error("The country was not found.");
+  public async update(id: string, newRepresentative: UpdateRepresentativeDto): Promise<Representative> {
+    const representative = await this.representativeRepository.findBy({ representative_id: id});
+    if (!representative) {
+      throw new Error("The representative was not found.");
     } else {
-      await this.countryRepository.update(id, newCountry);
+      await this.representativeRepository.update(id, newRepresentative);
       return;
     }
   }
 
   public async delete(id: string): Promise<void> {
-    await this.countryRepository.delete(id);
+    await this.representativeRepository.delete(id);
   }
 
 }

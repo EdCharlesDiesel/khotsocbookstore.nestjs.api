@@ -1,9 +1,12 @@
 import {
+  IsBoolean,
   IsEmail,
   IsNotEmpty, IsNumber,
   IsString
 } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
+import { Country } from "src/modules/country/country.entity";
+import { Representative } from "src/modules/representative/representative.entity";
 
 export class UpdateCustomerDto {
   @IsString()
@@ -11,7 +14,7 @@ export class UpdateCustomerDto {
   @ApiProperty()
   customer_id: string;
   
-   @IsString()
+  @IsString()
   @IsNotEmpty()
   @ApiProperty()
   first_name: string;
@@ -25,12 +28,7 @@ export class UpdateCustomerDto {
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty()
-  email: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  password: string;
+  emailAddress: string;  
 
   @IsString()
   @IsNotEmpty()
@@ -41,4 +39,40 @@ export class UpdateCustomerDto {
   @IsNotEmpty()
   @ApiProperty()
   phone_number: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  company?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  date?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  status?: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  activity?: number;
+  
+  @IsBoolean()
+  @IsNotEmpty()
+  @ApiProperty()
+  verified?: boolean;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty()
+  balance?: number;
+
+  @ApiProperty({type: Representative})  
+  representative?: Representative;
+
+  @ApiProperty({type: Country})
+  country?: Country;
 }

@@ -15,6 +15,9 @@ import { CustomerModule } from "./modules/customer/customer.module";
 import { WishlistModule } from "./modules/wishList/wishlist.module";
 import { ProductModule } from "./modules/product/product.module";
 import { CategoryModule } from "./modules/category/category.module";
+import { CountryModule } from "./modules/country/country.module";
+import { Representative } from "./modules/representative/representative.entity";
+import { RepresentativeModule } from "./modules/representative/representative.module";
 
 @Module({
   imports: [
@@ -34,10 +37,12 @@ import { CategoryModule } from "./modules/category/category.module";
     CategoryModule,
     CustomerModule,
     CartModule,
+    CountryModule,
     ProductModule,
     PaymentModule,
     OrderModule,
     OrderItemModule,
+    RepresentativeModule,
     ShipmentModule,
     UserModule,
     WishlistModule

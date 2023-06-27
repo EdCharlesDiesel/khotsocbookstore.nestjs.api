@@ -1,6 +1,6 @@
-export interface ICountry {
-   category_id: string;
+export interface IRepresentative {
+   representative_id: string;
 
    name?: string;
-   code?: string;
+   image?: string;
 }

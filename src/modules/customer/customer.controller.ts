@@ -19,13 +19,13 @@ import { IUser } from "../user/interfaces/IUser";
 
 @ApiTags("Customer")
 @Controller("Customer")
-@ApiBearerAuth('defaultBearerAuth')
+// @ApiBearerAuth('defaultBearerAuth')
 export class CustomerController {
   constructor(private customerService: CustomerService) {
   }
 
   @Post()
-  public async create( @Body() body: CreateCustomerDto, @Res() res) {
+  public async create( @Body() body: CreateCustomerDto) {
     // if (!body || (body && Object.keys(body).length === 0))
     //   return res
     //     .status(HttpStatus.BAD_REQUEST)
@@ -41,29 +41,29 @@ export class CustomerController {
    }
 
   @Get()
-  public async getCustomers(@Res() res) {
+  public async getCustomers() {
     return await this.customerService.findAll();
     // const customers = await this.customerService.findAll();
     // return res.status(HttpStatus.OK).json(customers);
   }
 
   @Get(":id")
-  public async getCustomer(@Param("id") id: string, @Res() res) {
-    const customers = await this.customerService.findById(id);
+  public async getCustomer(@Param("id") id: string) {
+    return await this.customerService.findById(id);
 
-    return res.status(HttpStatus.OK).json(customers);
+    //return res.status(HttpStatus.OK).json(customers);
   }
 
   @Put(":id")
-  public async update(@Param("id") id: string, @User() user: IUser,  @Body() body: UpdateCustomerDto, @Res() res) {
+  public async update(@Param("customer_id") customer_id: string, @Body() body: UpdateCustomerDto) {
     // console.log('id',id);
     // if (user.id !== customer.userId)
     //   return res
     //     .status(HttpStatus.NOT_FOUND)
     //     .send("Unable to find the entry.");
-    await this.customerService.update(id, body);
+    await this.customerService.update(customer_id, body);
    
-    return res.status(HttpStatus.NO_CONTENT).send();
+    // return res.status(HttpStatus.NO_CONTENT).send();
 
     // if (updatedCustomer) {
     //   return res.status(HttpStatus.NO_CONTENT).send();
@@ -73,14 +73,14 @@ export class CustomerController {
   }
 
   @Delete(":id")
-  public async delete(@User() user: IUser, @Param("id") id: string, @Res() res) {
+  public async delete(@User() user: IUser, @Param("id") id: string) {
     // if (user.id !== customer.userId)
     //   return res
     //     .status(HttpStatus.NOT_FOUND)
     //     .send("Unable to find the entry.");
 
-    await this.customerService.delete(id);
-    return res.status(HttpStatus.NO_CONTENT).send();
+    return await this.customerService.delete(id);
+    //return res.status(HttpStatus.NO_CONTENT).send();
     //TODO need to fix this.
     // if (deletedCustomer) {
     // } else {

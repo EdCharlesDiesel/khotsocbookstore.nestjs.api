@@ -73,7 +73,7 @@ describe("AuthenticationController", () => {
     let myuuid = uuidv4();
 
     let createAuthentication: LoginUserDto = {
-      username: '',
+      emailAddress: '',
       password: ""
     };
     it.skip("should create a authentication", () => {
